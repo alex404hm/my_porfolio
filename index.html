@@ -1,778 +1,443 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="description" content="Alexander Holm Mortensen - Software Developer Portfolio. Explore projects, skills, experience, and get in touch." />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- OpenGraph Meta Tags -->
-  <meta property="og:title" content="Alexander Holm Mortensen - Software Developer Portfolio" />
-  <meta property="og:description" content="Explore projects, skills, experience, and get in touch with Alexander Holm Mortensen." />
-  <meta property="og:image" content="og-image.jpg" />
-  <meta property="og:type" content="website" />
-  <title>Alexander Holm Mortensen - Software Developer</title>
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- GSAP and ScrollTrigger -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  <!-- Font Awesome CDN -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
-  <!-- Custom Styles -->
-  <style>
-    /* ------------------------------
-       Base & Reset
-    ------------------------------ */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { min-height: 100vh; }
-    body {
-      /* Unified full-page gradient background */
-      background: linear-gradient(135deg, #1e293b, #0f172a);
-      color: #fff;
-      font-family: system-ui, -apple-system, sans-serif;
-      overflow-x: hidden;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      scroll-behavior: smooth;
-    }
-    /* Wrapper to push footer to bottom */
-    .content { flex: 1; position: relative; z-index: 10; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Alexander Holm Mortensen - Software Developer specializing in Python, HTML, and CSS. View my portfolio of web development projects and professional experience.">
+    <meta name="keywords" content="Alexander Holm Mortensen, Software Developer, Python Developer, Web Developer, HTML, CSS, Portfolio, Copenhagen, Denmark">
+    <meta name="author" content="Alexander Holm Mortensen">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Alexander Holm Mortensen - Software Developer Portfolio">
+    <meta property="og:description" content="Portfolio showcasing Python, HTML, and CSS projects by Alexander Holm Mortensen, a Software Developer based in Copenhagen, Denmark">
+    <meta property="og:image" content="https://www.holdsport.dk/media/W1siZiIsIjIwMjMvMDkvMjkvMXd3cHhseTl1ZF84NTEwMzAzRl8wODMyXzQ0OENfOUQ1Rl85QzgwMDcxQzJDMzcuanBnIl0sWyJwIiwidTh1bWIiLCI2MDB4NjAwIyJdXQ==?sha=0217890684e578f8">
+    <meta property="og:url" content="https://alex404hm.github.io">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Alexander Holm Mortensen - Software Developer">
+    <meta name="twitter:description" content="Portfolio showcasing Python, HTML, and CSS projects by Alexander Holm Mortensen">
+    <meta name="twitter:image" content="https://www.holdsport.dk/media/W1siZiIsIjIwMjMvMDkvMjkvMXd3cHhseTl1ZF84NTEwMzAzRl8wODMyXzQ0OENfOUQ1Rl85QzgwMDcxQzJDMzcuanBnIl0sWyJwIiwidTh1bWIiLCI2MDB4NjAwIyJdXQ==?sha=0217890684e578f8">
+    <link rel="canonical" href="https://alex404hm.github.io">
+    <title>Alexander Holm Mortensen - Software Developer Portfolio</title>
     
-    /* ------------------------------
-       Animated Background Blobs
-    ------------------------------ */
-    .blob {
-      position: fixed;
-      background: radial-gradient(circle, rgba(139,92,246,0.2), transparent 70%);
-      border-radius: 50%;
-      filter: blur(60px);
-      opacity: 0.5;
-      z-index: 0;
-    }
-    .blob:nth-child(1) {
-      width: 400px; height: 400px;
-      top: -100px; left: -100px;
-      animation: moveBlob 25s infinite ease-in-out;
-    }
-    .blob:nth-child(2) {
-      width: 500px; height: 500px;
-      top: 200px; right: -150px;
-      animation: moveBlob 30s infinite ease-in-out;
-    }
-    .blob:nth-child(3) {
-      width: 350px; height: 350px;
-      bottom: -100px; left: 20%;
-      animation: moveBlob 28s infinite ease-in-out;
-    }
-    @keyframes moveBlob {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(30px, -30px) scale(1.1); }
-    }
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="script.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    /* ------------------------------
-       Navbar
-    ------------------------------ */
-    #navbar {
-      background: rgba(15, 23, 42, 0.4);
-      backdrop-filter: blur(10px);
-      transition: background 0.3s ease;
-    }
-    #navbar.scrolled { background: rgba(15, 23, 42, 0.8); }
-    .nav-link {
-      position: relative;
-      transition: all 0.3s ease;
-      color: #fff;
-      padding-bottom: 2px;
-    }
-    .nav-link::after {
-      content: '';
-      position: absolute;
-      width: 0;
-      height: 2px;
-      bottom: -4px;
-      left: 0;
-      background: linear-gradient(90deg, #a78bfa, #8b5cf6);
-      transition: width 0.3s ease;
-    }
-    .nav-link:hover::after { width: 100%; }
-    .nav-link.active::after {
-      width: 100%;
-      background: linear-gradient(90deg, #8b5cf6, #6d28d9);
-    }
-    .mobile-nav-link {
-      transform: translateX(-20px);
-      opacity: 0;
-      transition: all 0.3s ease;
-      color: #fff;
-    }
-    .mobile-menu-open .mobile-nav-link {
-      transform: translateX(0);
-      opacity: 1;
-    }
-    .mobile-menu-backdrop {
-      backdrop-filter: blur(8px);
-      background: rgba(17, 24, 39, 0.8);
-    }
-    @keyframes slideDown {
-      from { transform: translateY(-100%); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-    .nav-scroll { animation: slideDown 0.5s ease forwards; }
-    .logo-container { transition: transform 0.5s ease; }
-    .logo-container:hover { transform: scale(1.05) rotate(5deg); }
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     
-    /* ------------------------------
-       Section Title Styling
-    ------------------------------ */
-    .section-title {
-      font-size: 2.5rem;
-      font-weight: 700;
-      text-align: center;
-      position: relative;
-      color: #fff;
-    }
-    .section-title::after {
-      content: "";
-      display: block;
-      width: 80px;
-      height: 4px;
-      background: linear-gradient(to right, #a78bfa, #ec4899);
-      margin: 0.5rem auto 0;
-      border-radius: 2px;
-      opacity: 0;
-      transform: translateY(10px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-    .section-title.revealed::after {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    
-    /* ------------------------------
-       Project Card Styling
-    ------------------------------ */
-    .project-card {
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 1rem;
-      overflow: hidden;
-      transition: transform 0.3s;
-      position: relative;
-    }
-    .project-card:hover { transform: translateY(-5px); }
-    /* On hover, a black overlay will cover the image and show a "View Website" button */
-    .overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.7);
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    .project-card:hover .overlay { opacity: 1; }
-    .project-card img { transition: opacity 0.3s ease; }
-    /* Remove year display */
-    
-    /* In the project details, display both GitHub and Website tags */
-    .project-details .tags {
-      display: flex;
-      gap: 0.5rem;
-    }
-    
-    .tech-tag {
-      background: #6b46c1;
-      padding: 0.25rem 0.5rem;
-      border-radius: 0.25rem;
-      font-size: 0.75rem;
-      font-weight: 500;
-      color: #fff;
-    }
-    
-    /* ------------------------------
-       Experience Timeline Section
-    ------------------------------ */
-    #experience {
-      padding: 4rem 1rem;
-      position: relative;
-      z-index: 10;
-    }
-    .timeline {
-      position: relative;
-      margin: 2rem 0;
-      padding-left: 2rem;
-      border-left: 2px solid rgba(255,255,255,0.2);
-    }
-    .timeline-item {
-      position: relative;
-      margin-bottom: 2rem;
-      padding-left: 1rem;
-    }
-    .timeline-item::before {
-      content: "";
-      position: absolute;
-      left: -11px;
-      top: 0;
-      width: 20px;
-      height: 20px;
-      background: linear-gradient(135deg, #8b5cf6, #6d28d9);
-      border-radius: 50%;
-      border: 3px solid #0f172a;
-    }
-    .timeline-item h3 {
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-    }
-    .timeline-item p {
-      font-size: 0.9rem;
-      color: #cbd5e1;
-    }
-    
-    /* ------------------------------
-       Skill Bars Animation (Initial state)
-    ------------------------------ */
-    .skill-bar {
-      opacity: 0;
-      transform: scaleX(0);
-    }
-    
-    /* ------------------------------
-       Contact Button
-    ------------------------------ */
-    .contact-btn {
-      display: inline-block;
-      padding: 1rem 2rem;
-      background: linear-gradient(90deg, #8b5cf6, #6d28d9);
-      color: #fff;
-      font-weight: 600;
-      border-radius: 9999px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease, background 0.3s ease;
-    }
-    .contact-btn:hover {
-      transform: scale(1.05);
-      background: linear-gradient(90deg, #6d28d9, #4c1d95);
-    }
-    
-    /* ------------------------------
-       Jump to Top Button
-    ------------------------------ */
-    #toTopBtn {
-      position: fixed;
-      bottom: 40px;
-      right: 40px;
-      background: #a78bfa;
-      color: #fff;
-      padding: 0.75rem 1rem;
-      border-radius: 9999px;
-      border: none;
-      cursor: pointer;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
-      z-index: 100;
-    }
-    #toTopBtn.show { opacity: 1; visibility: visible; }
-    
-    /* ------------------------------
-       Footer Styling
-    ------------------------------ */
-    footer {
-      background: linear-gradient(135deg, #1e293b, #0f172a);
-    }
-    footer .container { padding-bottom: 1rem; }
-    footer ul li a { color: #fff; }
-  </style>
+    <!-- Custom Styles -->
+     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <!-- Animated Background Blobs -->
-  <div class="blob"></div>
-  <div class="blob"></div>
-  <div class="blob"></div>
-  <div class="blob"></div>
-  
-  <!-- Main Content Wrapper -->
-  <div class="content relative">
+
+<body class="bg-gray-900 text-gray-300">
     <!-- Modern Navbar -->
-    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300" aria-label="Main Navigation">
-      <div class="container mx-auto px-6 py-4 flex items-center justify-between">
-        <!-- Logo/Name -->
-        <a href="#" class="logo-container flex items-center space-x-3" aria-label="Homepage">
-          <div class="w-10 h-10 bg-gradient-to-br from-purple-600 to-purple-800 rounded-lg flex items-center justify-center shadow-lg">
-            <span class="text-xl font-bold text-white">A</span>
-          </div>
-          <span class="text-xl font-semibold text-white tracking-wide">Alexander Holm</span>
-        </a>
-        <!-- Desktop Menu -->
-        <div class="hidden md:flex items-center space-x-10">
-          <a href="#about" class="nav-link text-white hover:text-purple-400 font-medium" aria-label="About">About</a>
-          <a href="#experience" class="nav-link text-white hover:text-purple-400 font-medium" aria-label="Experience">Experience</a>
-          <a href="#projects" class="nav-link text-white hover:text-purple-400 font-medium" aria-label="Projects">Projects</a>
-          <a href="#skills" class="nav-link text-white hover:text-purple-400 font-medium" aria-label="Skills">Skills</a>
-          <a href="#contact" class="nav-link text-white hover:text-purple-400 font-medium" aria-label="Contact">Contact</a>
+    <header class="fixed top-0 left-0 right-0 z-50">
+        <!-- Frosted Glass Effect -->
+        <div class="absolute inset-0 bg-gray-900/70 backdrop-blur-md"></div>
+        
+        <nav class="container mx-auto px-6 py-4 relative">
+            <div class="flex items-center justify-between">
+                <!-- Logo/Name with subtle animation -->
+                <a href="#home" class="group" aria-label="Home">
+                    <div class="text-xl font-bold text-white relative">
+                        <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-600">
+                            Alexander
+                        </span>
+                        <span class="text-white ml-1">H. Mortensen</span>
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 group-hover:w-full transition-all duration-300"></span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <ul class="hidden md:flex items-center space-x-8">
+                    <li>
+                        <a href="#home" class="nav-link text-gray-300 hover:text-blue-400 text-sm uppercase tracking-wider font-medium">
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#about" class="nav-link text-gray-300 hover:text-blue-400 text-sm uppercase tracking-wider font-medium">
+                            About
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#education" class="nav-link text-gray-300 hover:text-blue-400 text-sm uppercase tracking-wider font-medium">
+                            Education
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#projects" class="nav-link text-gray-300 hover:text-blue-400 text-sm uppercase tracking-wider font-medium">
+                            Projects
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#contact" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm uppercase tracking-wider font-medium transition-colors duration-300 shadow-lg shadow-blue-600/20">
+                            Contact
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- Modern Mobile Menu Toggle -->
+                <button id="mobile-menu-toggle" class="md:hidden text-white p-2 focus:outline-none z-20" aria-label="Toggle menu">
+                    <div class="w-6 h-5 relative flex flex-col justify-between">
+                        <span class="w-full h-0.5 bg-white rounded-full transform transition-all duration-300" id="line1"></span>
+                        <span class="w-full h-0.5 bg-white rounded-full transform transition-all duration-300" id="line2"></span>
+                        <span class="w-full h-0.5 bg-white rounded-full transform transition-all duration-300" id="line3"></span>
+                    </div>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Modern Mobile Menu Overlay -->
+        <div id="mobile-menu" class="fixed inset-0 bg-gray-900/95 backdrop-blur-lg flex items-center justify-center z-10 opacity-0 pointer-events-none transition-all duration-500">
+            <ul class="flex flex-col items-center space-y-8">
+                <li>
+                    <a href="#home" class="text-3xl font-light text-white hover:text-blue-400 transition-colors mobile-nav-link">
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a href="#about" class="text-3xl font-light text-white hover:text-blue-400 transition-colors mobile-nav-link">
+                        About
+                    </a>
+                </li>
+                <li>
+                    <a href="#education" class="text-3xl font-light text-white hover:text-blue-400 transition-colors mobile-nav-link">
+                        Education
+                    </a>
+                </li>
+                <li>
+                    <a href="#projects" class="text-3xl font-light text-white hover:text-blue-400 transition-colors mobile-nav-link">
+                        Projects
+                    </a>
+                </li>
+                <li>
+                    <a href="#contact" class="text-3xl font-light text-white hover:text-blue-400 transition-colors mobile-nav-link">
+                        Contact
+                    </a>
+                </li>
+            </ul>
         </div>
-        <!-- Mobile Menu Button -->
-        <button class="md:hidden text-white focus:outline-none" id="menu-btn" aria-label="Toggle Mobile Menu">
-          <svg class="w-7 h-7 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-          </svg>
-        </button>
-      </div>
-      <!-- Mobile Menu -->
-      <div id="mobile-menu" class="md:hidden hidden mobile-menu-backdrop">
-        <div class="flex flex-col space-y-6 py-6 px-6">
-          <a href="#about" class="mobile-nav-link text-white text-lg" style="transition-delay: 0.1s">About</a>
-          <a href="#experience" class="mobile-nav-link text-white text-lg" style="transition-delay: 0.2s">Experience</a>
-          <a href="#projects" class="mobile-nav-link text-white text-lg" style="transition-delay: 0.3s">Projects</a>
-          <a href="#skills" class="mobile-nav-link text-white text-lg" style="transition-delay: 0.4s">Skills</a>
-          <a href="#contact" class="mobile-nav-link text-white text-lg" style="transition-delay: 0.5s">Contact</a>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="min-h-screen flex items-center justify-center pt-20 md:pt-16 relative">
+            <div class="container mx-auto px-4 text-center relative z-10 hero-content">
+                <div class="max-w-3xl mx-auto">
+                    <h1 class="text-3xl md:text-6xl font-bold mb-4 text-white">
+                        Hi, I'm <span class="text-blue-400">Alexander Holm Mortensen</span>
+                    </h1>
+                    <p class="text-sm md:text-lg mb-6 md:mb-8 text-gray-300 typing-text">
+                        <span id="typed-text"></span><span class="cursor">|</span>
+                    </p>
+
+                    <!-- Social Icons -->
+                    <div class="flex justify-center items-center mb-6 md:mb-8 space-x-6">
+                        <a href="https://github.com/alex404hm" target="_blank" class="text-gray-400 hover:text-white transition-colors transform hover:scale-110" aria-label="GitHub Profile">
+                            <i class="fab fa-github text-2xl md:text-3xl"></i>
+                        </a>
+                        <a href="mailto:almo30@elev.tec.dk" class="text-gray-400 hover:text-white transition-colors transform hover:scale-110" aria-label="Email">
+                            <i class="fas fa-envelope text-2xl md:text-3xl"></i>
+                        </a>
+                        <a href="tel:+4522987383" class="text-gray-400 hover:text-white transition-colors transform hover:scale-110" aria-label="Phone">
+                            <i class="fas fa-phone text-2xl md:text-3xl"></i>
+                        </a>
+                    </div>
+
+                    <!-- CTA Buttons -->
+                    <div class="flex flex-col md:flex-row justify-center space-y-3 md:space-y-0 md:space-x-4">
+                        <a href="#projects" class="bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/20 transform hover:scale-105">
+                            View My Work
+                        </a>
+                        <a href="#contact" class="border border-gray-600 text-gray-300 px-6 py-3 rounded-full hover:bg-gray-800 transition-colors transform hover:scale-105">
+                            Contact Me
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Background Gradient Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-b from-gray-900/50 to-gray-900/80 z-0"></div>
+        </section>
+        <!-- About Me Section -->
+        <section id="about" class="py-12 md:py-16 bg-gray-900">
+           <div class="container mx-auto px-4">
+               <div class="max-w-6xl mx-auto">
+                   <!-- Desktop Layout: Image on left, content on right -->
+                   <div class="hidden md:grid grid-cols-2 gap-8 items-center">
+                       <!-- Profile Image -->
+                       <div class="flex justify-center">
+                           <div class="about-image-container relative group">
+                               <div class="absolute -inset-4 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full blur-xl opacity-20 group-hover:opacity-30 transition-all duration-300 about-image-glow"></div>
+                               <div class="relative z-10 w-full overflow-hidden border-2 border-gray-800 rounded-full transform group-hover:scale-105 transition-transform duration-300">
+                                   <img 
+                                       src="https://www.holdsport.dk/media/W1siZiIsIjIwMjMvMDkvMjkvMXd3cHhseTl1ZF84NTEwMzAzRl8wODMyXzQ0OENfOUQ1Rl85QzgwMDcxQzJDMzcuanBnIl0sWyJwIiwidGh1bWIiLCI2MDB4NjAwIyJdXQ==?sha=0217890684e578f8" 
+                                       alt="Alexander Holm Mortensen - Software Developer specializing in Python, HTML, and CSS" 
+                                       class="w-full h-auto object-cover"
+                                       width="300"
+                                       height="300"
+                                       loading="lazy"
+                                   >
+                               </div>
+                           </div>
+                       </div>
+
+                       <!-- About Me Content -->
+                       <div class="about-content p-6">
+                           <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white">About Me</h2>
+                           <p class="text-gray-400 mb-6">
+                               I'm Alexander Holm Mortensen, a passionate Software Developer dedicated to creating innovative digital solutions. 
+                               With a keen eye for detail and a love for solving complex problems, I transform technical challenges into 
+                               elegant and user-friendly applications.
+                           </p>
+
+                           <!-- Skills Section -->
+                           <div class="space-y-4">
+                               <h3 class="text-xl md:text-2xl font-semibold mb-4 text-white">Tech Skills</h3>
+                               
+                               <!-- Skill Tags -->
+                               <div class="flex flex-wrap gap-3">
+                                   <span class="px-4 py-2 bg-blue-600 text-white rounded-full">Python</span>
+                                   <span class="px-4 py-2 bg-green-600 text-white rounded-full">HTML</span>
+                                   <span class="px-4 py-2 bg-purple-600 text-white rounded-full">CSS</span>
+                               </div>
+                           </div>
+
+                           <!-- CTA Buttons -->
+                           <div class="mt-8 flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
+                               <a 
+                                   href="/resume.pdf" 
+                                   download 
+                                   class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center space-x-2 shadow-lg shadow-blue-600/20"
+                               >
+                                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                       <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-9.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                   </svg>
+                                   <span>Download Resume</span>
+                               </a>
+                               <a 
+                                   href="#contact" 
+                                   class="border border-gray-700 text-gray-300 px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center justify-center"
+                               >
+                                   Contact Me
+                               </a>
+                           </div>
+                       </div>
+                   </div>
+                   
+                   <!-- Mobile Layout: Image above content -->
+                   <div class="md:hidden flex flex-col items-center">
+                       <!-- Profile Image -->
+                       <div class="flex justify-center mb-8">
+                           <div class="about-image-container relative group">
+                               <div class="absolute -inset-4 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full blur-xl opacity-20 group-hover:opacity-30 transition-all duration-300 about-image-glow"></div>
+                               <div class="relative z-10 w-full overflow-hidden border-2 border-gray-800 rounded-full transform group-hover:scale-105 transition-transform duration-300">
+                                   <img 
+                                       src="https://www.holdsport.dk/media/W1siZiIsIjIwMjMvMDkvMjkvMXd3cHhseTl1ZF84NTEwMzAzRl8wODMyXzQ0OENfOUQ1Rl85QzgwMDcxQzJDMzcuanBnIl0sWyJwIiwidGh1bWIiLCI2MDB4NjAwIyJdXQ==?sha=0217890684e578f8" 
+                                       alt="Alexander Holm Mortensen - Software Developer specializing in Python, HTML, and CSS" 
+                                       class="w-full h-auto object-cover"
+                                       width="300"
+                                       height="300"
+                                       loading="lazy"
+                                   >
+                               </div>
+                           </div>
+                       </div>
+
+                       <!-- About Me Content -->
+                       <div class="about-content p-6 max-w-2xl mx-auto">
+                           <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white text-center">About Me</h2>
+                           <p class="text-gray-400 mb-6 text-center">
+                               I'm Alexander Holm Mortensen, a passionate Software Developer dedicated to creating innovative digital solutions. 
+                               With a keen eye for detail and a love for solving complex problems, I transform technical challenges into 
+                               elegant and user-friendly applications.
+                           </p>
+
+                           <!-- Skills Section -->
+                           <div class="space-y-4">
+                               <h3 class="text-xl md:text-2xl font-semibold mb-4 text-white text-center">Tech Skills</h3>
+                               
+                               <!-- Skill Tags -->
+                               <div class="flex flex-wrap gap-3 justify-center">
+                                   <span class="px-4 py-2 bg-blue-600 text-white rounded-full">Python</span>
+                                   <span class="px-4 py-2 bg-green-600 text-white rounded-full">HTML</span>
+                                   <span class="px-4 py-2 bg-purple-600 text-white rounded-full">CSS</span>
+                               </div>
+                           </div>
+
+                           <!-- CTA Buttons -->
+                           <div class="mt-8 flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 justify-center">
+                               <a 
+                                   href="/resume.pdf" 
+                                   download 
+                                   class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center space-x-2 shadow-lg shadow-blue-600/20"
+                               >
+                                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                       <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-9.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                   </svg>
+                                   <span>Download Resume</span>
+                               </a>
+                               <a 
+                                   href="#contact" 
+                                   class="border border-gray-700 text-gray-300 px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center justify-center"
+                               >
+                                   Contact Me
+                               </a>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+        </section>
+        <!-- Education Section -->
+        <section id="education" class="py-16 bg-gray-900">
+           <div class="container mx-auto px-4">
+               <h2 class="text-4xl font-bold text-center mb-12 text-white">Education</h2>
+               
+               <div class="max-w-4xl mx-auto">
+                   <!-- Education Timeline -->
+                   <div class="space-y-12">
+                       <!-- Ballerup TEC -->
+                       <div class="relative pl-8 border-l-2 border-blue-500">
+                           <div class="absolute -left-2 top-0 w-4 h-4 bg-blue-500 rounded-full"></div>
+                           <div class="bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700 transform hover:scale-105 transition-transform duration-300">
+                               <h3 class="text-xl font-semibold text-blue-400 mb-2">Ballerup TEC</h3>
+                               <p class="text-gray-400 mb-2">Data & Kommunikation</p>
+                               <p class="text-sm text-gray-500">Aug 2024 — Current</p>
+                           </div>
+                       </div>
+
+                       <!-- Bagsværd Kostskole & Gymnasium -->
+                       <div class="relative pl-8 border-l-2 border-green-500">
+                           <div class="absolute -left-2 top-0 w-4 h-4 bg-green-500 rounded-full"></div>
+                           <div class="bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700 transform hover:scale-105 transition-transform duration-300">
+                               <h3 class="text-xl font-semibold text-green-400 mb-2">Bagsværd Kostskole & Gymnasium</h3>
+                               <p class="text-gray-400 mb-2">Folkeskole</p>
+                               <p class="text-sm text-gray-500">Aug 2022 — Aug 2024</p>
+                           </div>
+                       </div>
+
+                       <!-- Gladsaxe Skole -->
+                       <div class="relative pl-8 border-l-2 border-purple-500">
+                           <div class="absolute -left-2 top-0 w-4 h-4 bg-purple-500 rounded-full"></div>
+                           <div class="bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700 transform hover:scale-105 transition-transform duration-300">
+                               <h3 class="text-xl font-semibold text-purple-400 mb-2">Gladsaxe Skole</h3>
+                               <p class="text-gray-400 mb-2">Folkeskole</p>
+                               <p class="text-sm text-gray-500">Aug 2014 — Aug 2022</p>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+        </section>
+        <!-- Projects Section -->
+        <section id="projects" class="py-16 bg-gray-900">
+           <div class="container mx-auto px-4">
+               <h2 class="text-4xl font-bold text-center mb-12 text-white">Projects</h2>
+               
+               <div id="projects-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                   <!-- Placeholder for GitHub projects -->
+                   <div class="text-center text-gray-400">
+                       Loading projects...
+                   </div>
+               </div>
+           </div>
+        </section>
+        <!-- Contact Section -->
+        <section id="contact" class="py-16 bg-gray-900 relative overflow-hidden">
+           <!-- Background Gradient Blobs -->
+           <div class="absolute inset-0 overflow-hidden z-0">
+               <div class="gradient-blob blob-1"></div>
+               <div class="gradient-blob blob-2"></div>
+               <div class="gradient-blob blob-3"></div>
+           </div>
+           
+           <div class="container mx-auto px-4 relative z-10">
+               <h2 class="text-4xl font-bold text-center mb-8 text-white">Contact Me</h2>
+               
+               <div class="max-w-xl mx-auto text-center">
+                   <p class="text-gray-300 mb-8">Feel free to reach out for any inquiries or collaboration opportunities.</p>
+                   
+                   <a href="mailto:almo30@elev.tec.dk" class="inline-flex items-center justify-center px-8 py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 shadow-lg shadow-blue-600/20">
+                       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                       </svg>
+                       <span class="text-lg font-medium">Send Me an Email</span>
+                   </a>
+                   
+                   <div class="mt-8 flex justify-center space-x-6">
+                       <a href="mailto:almo30@elev.tec.dk" class="text-gray-400 hover:text-blue-400 transition-colors">
+                           <i class="fas fa-envelope text-xl"></i>
+                       </a>
+                       <a href="tel:+4522987383" class="text-gray-400 hover:text-blue-400 transition-colors">
+                           <i class="fas fa-phone text-xl"></i>
+                       </a>
+                       <a href="https://github.com/alex404hm" target="_blank" class="text-gray-400 hover:text-blue-400 transition-colors">
+                           <i class="fab fa-github text-xl"></i>
+                       </a>
+                   </div>
+               </div>
+           </div>
+        </section>
+    </main>
+
+    <!-- Improved Modern Footer -->
+    <footer class="bg-gray-900 py-8 border-t border-gray-800">
+        <div class="container mx-auto px-6">
+            <!-- Footer Content -->
+            <div class="flex flex-col md:flex-row justify-between items-center footer-content">
+                <!-- Left Column: Name and Info -->
+                <div class="mb-6 md:mb-0 text-center md:text-left">
+                    <div class="text-xl font-bold mb-2">
+                        <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-600">
+                            Alexander Holm Mortensen
+                        </span>
+                    </div>
+                    <p class="text-gray-400 text-sm">Software Developer • Copenhagen, Denmark</p>
+                </div>
+                
+                <!-- Right Column: Contact & Social -->
+                <div class="flex flex-col items-center md:items-end footer-social">
+                    <!-- Contact Info -->
+                    <div class="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4 mb-4">
+                        <a href="mailto:almo30@elev.tec.dk" class="text-gray-400 hover:text-blue-400 transition-colors">
+                            <i class="fas fa-envelope mr-2"></i>almo30@elev.tec.dk
+                        </a>
+                        <a href="tel:+4522987383" class="text-gray-400 hover:text-blue-400 transition-colors">
+                            <i class="fas fa-phone mr-2"></i>+45 2298 7383
+                        </a>
+                    </div>
+                    
+                    <!-- Social Icons -->
+                    <div class="flex space-x-6">
+                        <a href="https://github.com/alex404hm" target="_blank" class="text-gray-400 hover:text-blue-400 transition-all duration-300 transform hover:scale-110" aria-label="GitHub Profile">
+                            <i class="fab fa-github text-xl"></i>
+                        </a>
+                        <a href="mailto:almo30@elev.tec.dk" class="text-gray-400 hover:text-blue-400 transition-all duration-300 transform hover:scale-110" aria-label="Email">
+                            <i class="fas fa-envelope text-xl"></i>
+                        </a>
+                        <a href="tel:+4522987383" class="text-gray-400 hover:text-blue-400 transition-all duration-300 transform hover:scale-110" aria-label="Phone">
+                            <i class="fas fa-phone text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Copyright -->
+            <div class="mt-8 text-center text-gray-500 text-sm">
+                &copy; <span id="currentYear">2025</span> Alexander Holm Mortensen. All rights reserved.
+            </div>
         </div>
-      </div>
-    </nav>
+    </footer>
     
-    <!-- Hero Section -->
-    <section class="min-h-screen flex items-center justify-center px-6 pt-20 relative">
-      <div class="text-center space-y-6">
-        <div class="relative inline-block">
-          <div class="absolute inset-0 bg-purple-600 blur-3xl opacity-20"></div>
-          <h1 class="text-5xl md:text-7xl font-bold relative">
-            Hi, I'm <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">Alexander</span>
-          </h1>
-        </div>
-        <p class="text-xl md:text-2xl text-gray-300">
-          A passionate <span class="text-green-400 font-semibold">Software Developer</span> crafting digital experiences
-        </p>
-        <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-6 mt-8">
-          <!-- Resume Button Opens in New Tab -->
-          <a href="resume.pdf" target="_blank" class="w-full md:w-auto px-8 py-3 bg-purple-600 rounded-full hover:bg-purple-700 transition-all transform hover:scale-105" aria-label="View Resume">
-            <i class="fas fa-file-alt mr-2"></i>View Resume
-          </a>
-          <a href="#projects" class="w-full md:w-auto px-8 py-3 border-2 border-purple-600 rounded-full hover:bg-purple-600/20 transition-all transform hover:scale-105" aria-label="View Projects">
-            <i class="fas fa-code mr-2"></i>View Projects
-          </a>
-        </div>
-        <!-- Developer Social Link (GitHub) -->
-        <div class="flex justify-center space-x-6 mt-12">
-          <a href="https://github.com/alex404hm" target="_blank" class="social-link" aria-label="GitHub">
-            <i class="fab fa-github text-2xl"></i>
-          </a>
-        </div>
-      </div>
-    </section>
-    
-    <!-- About Section -->
-    <section id="about" class="py-24 px-6 relative">
-      <div class="container mx-auto max-w-4xl">
-        <h2 class="section-title">About Me</h2>
-        <div class="mt-12 grid md:grid-cols-2 gap-12 items-center">
-          <div class="space-y-6">
-            <p class="text-lg text-gray-300 leading-relaxed">
-              I'm a Software Developer with a passion for creating elegant solutions to complex problems. I work primarily with <strong>Python, HTML, CSS, and JavaScript</strong> and have experience with <strong>SQL, MongoDB, and C#</strong>.
-            </p>
-            <div class="space-y-4">
-              <div class="flex items-center space-x-4">
-                <i class="fas fa-code text-purple-500 text-xl"></i>
-                <span>3+ years of development experience</span>
-              </div>
-            </div>
-          </div>
-          <div class="relative">
-            <div class="absolute inset-0 bg-purple-600 blur-3xl opacity-20"></div>
-            <div class="relative bg-gray-800 p-6 rounded-2xl border border-gray-700">
-              <h3 class="text-xl font-semibold mb-4">Tech Stack</h3>
-              <div class="grid grid-cols-2 gap-4">
-                <div class="flex items-center space-x-2">
-                  <i class="fab fa-js text-yellow-400"></i>
-                  <span>JavaScript</span>
-                </div>
-                <div class="flex items-center space-x-2">
-                  <i class="fab fa-python text-green-500"></i>
-                  <span>Python</span>
-                </div>
-                <div class="flex items-center space-x-2">
-                  <i class="fas fa-code text-purple-400"></i>
-                  <span>HTML & CSS</span>
-                </div>
-                <div class="flex items-center space-x-2">
-                  <i class="fas fa-database text-blue-400"></i>
-                  <span>SQL & MongoDB</span>
-                </div>
-                <div class="flex items-center space-x-2">
-                  <i class="fas fa-laptop-code text-indigo-400"></i>
-                  <span>C#</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    
-    <!-- Experience Timeline Section -->
-    <section id="experience" class="py-24 px-6 relative">
-      <div class="container mx-auto max-w-4xl">
-        <h2 class="section-title">Experience</h2>
-        <div class="timeline mt-12">
-          <!-- Timeline Item 1: Ballerup TEC -->
-          <div class="timeline-item">
-            <h3>Ballerup TEC, Ungdomsuddannelse - Data & Kommunikation</h3>
-            <p class="text-sm text-gray-400">Aug 2024 — Nuværende, Ballerup</p>
-            <p class="mt-2 text-gray-300">Currently pursuing studies focused on data and communication.</p>
-          </div>
-          <!-- Timeline Item 2: Bagsværd Kostskole & Gymnasium -->
-          <div class="timeline-item">
-            <h3>Bagsværd Kostskole & Gymnasium, Folkeskolen - Digital Linje</h3>
-            <p class="text-sm text-gray-400">Aug 2022 — Aug 2024, Bagsværd</p>
-            <p class="mt-2 text-gray-300">Studied the digital line with an emphasis on technology and communication.</p>
-          </div>
-          <!-- Timeline Item 3: Gladsaxe Skole -->
-          <div class="timeline-item">
-            <h3>Gladsaxe Skole, Folkeskole</h3>
-            <p class="text-sm text-gray-400">Aug 2014 — Aug 2022, Gladsaxe</p>
-            <p class="mt-2 text-gray-300">Completed primary education with a focus on foundational learning.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-    
-    <!-- Projects Section -->
-    <section id="projects" class="py-24 px-6 relative">
-      <div class="container mx-auto">
-        <h2 class="section-title">Featured Projects</h2>
-        <div class="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <!-- Project Card 1: Support Pro -->
-          <div class="project-card group">
-            <div class="relative overflow-hidden rounded-t-2xl">
-              <!-- Project preview image -->
-              <img src="support-pro.png" alt="Support Pro" class="w-full h-48 object-cover" loading="lazy" />
-              <!-- Black overlay with View Website button -->
-              <div class="overlay">
-                <a href="https://support-pro.vercel.app/" target="_blank" class="px-6 py-2 bg-white text-gray-900 rounded-full">View Website</a>
-              </div>
-            </div>
-            <div class="p-6 bg-transparent">
-              <h3 class="text-xl font-semibold mb-2">Support Pro</h3>
-              <p class="text-gray-400 mb-4">A real-time IT support platform with chatbot integration.</p>
-              <div class="project-details">
-                <div class="tags flex space-x-3">
-                  <span class="tech-tag"><i class="fab fa-github mr-1"></i>GitHub</span>
-                  <span class="tech-tag"><i class="fas fa-globe mr-1"></i>Website</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Project Card 2: GiftSage -->
-          <div class="project-card group">
-            <div class="relative overflow-hidden rounded-t-2xl">
-              <img src="giftsage.png" alt="GiftSage" class="w-full h-48 object-cover" loading="lazy" />
-              <div class="overlay">
-                <a href="https://giftsage-pi.vercel.app/" target="_blank" class="px-6 py-2 bg-white text-gray-900 rounded-full">View Website</a>
-              </div>
-            </div>
-            <div class="p-6 bg-transparent">
-              <h3 class="text-xl font-semibold mb-2">GiftSage</h3>
-              <p class="text-gray-400 mb-4">A modern gift management application.</p>
-              <div class="project-details">
-                <div class="tags flex space-x-3">
-                  <span class="tech-tag"><i class="fab fa-github mr-1"></i>GitHub</span>
-                  <span class="tech-tag"><i class="fas fa-globe mr-1"></i>Website</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Project Card 3: Coming Soon -->
-          <div class="project-card group">
-            <div class="relative overflow-hidden rounded-t-2xl">
-              <!-- Placeholder image for coming soon -->
-              <img src="coming-soon.png" alt="Coming Soon" class="w-full h-48 object-cover" loading="lazy" />
-              <div class="overlay">
-                <span class="px-6 py-2 bg-gray-500 text-white rounded-full">Coming Soon</span>
-              </div>
-            </div>
-            <div class="p-6 bg-transparent">
-              <h3 class="text-xl font-semibold mb-2">Upcoming Project</h3>
-              <p class="text-gray-400 mb-4">Stay tuned for our next exciting project.</p>
-              <div class="project-details">
-                <div class="tags flex space-x-3">
-                  <span class="tech-tag"><i class="fas fa-hourglass-half mr-1"></i>Coming Soon</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    
-    <!-- Skills Section -->
-    <section id="skills" class="py-24 px-6 relative">
-      <div class="container mx-auto">
-        <h2 class="section-title">Skills & Expertise</h2>
-        <div class="mt-12 grid md:grid-cols-2 gap-8">
-          <!-- Frontend Skills -->
-          <div class="bg-transparent p-6 rounded-2xl border border-gray-700">
-            <h3 class="text-xl font-semibold mb-6">Frontend</h3>
-            <div class="space-y-4">
-              <div class="skill-bar" data-skill="98">
-                <div class="flex justify-between mb-1">
-                  <span>HTML</span>
-                  <span>98%</span>
-                </div>
-                <div class="h-2 bg-gray-700 rounded-full">
-                  <div class="h-full bg-purple-600 rounded-full" style="width: 98%"></div>
-                </div>
-              </div>
-              <div class="skill-bar" data-skill="98">
-                <div class="flex justify-between mb-1">
-                  <span>CSS</span>
-                  <span>98%</span>
-                </div>
-                <div class="h-2 bg-gray-700 rounded-full">
-                  <div class="h-full bg-purple-600 rounded-full" style="width: 98%"></div>
-                </div>
-              </div>
-              <div class="skill-bar" data-skill="95">
-                <div class="flex justify-between mb-1">
-                  <span>JavaScript</span>
-                  <span>95%</span>
-                </div>
-                <div class="h-2 bg-gray-700 rounded-full">
-                  <div class="h-full bg-purple-600 rounded-full" style="width: 95%"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Backend & Database Skills -->
-          <div class="bg-transparent p-6 rounded-2xl border border-gray-700">
-            <h3 class="text-xl font-semibold mb-6">Backend & Database</h3>
-            <div class="space-y-4">
-              <div class="skill-bar" data-skill="95">
-                <div class="flex justify-between mb-1">
-                  <span>Python</span>
-                  <span>95%</span>
-                </div>
-                <div class="h-2 bg-gray-700 rounded-full">
-                  <div class="h-full bg-purple-600 rounded-full" style="width: 95%"></div>
-                </div>
-              </div>
-              <div class="skill-bar" data-skill="90">
-                <div class="flex justify-between mb-1">
-                  <span>SQL</span>
-                  <span>90%</span>
-                </div>
-                <div class="h-2 bg-gray-700 rounded-full">
-                  <div class="h-full bg-purple-600 rounded-full" style="width: 90%"></div>
-                </div>
-              </div>
-              <div class="skill-bar" data-skill="85">
-                <div class="flex justify-between mb-1">
-                  <span>MongoDB</span>
-                  <span>85%</span>
-                </div>
-                <div class="h-2 bg-gray-700 rounded-full">
-                  <div class="h-full bg-purple-600 rounded-full" style="width: 85%"></div>
-                </div>
-              </div>
-              <div class="skill-bar" data-skill="85">
-                <div class="flex justify-between mb-1">
-                  <span>C#</span>
-                  <span>85%</span>
-                </div>
-                <div class="h-2 bg-gray-700 rounded-full">
-                  <div class="h-full bg-purple-600 rounded-full" style="width: 85%"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    
-    <!-- Contact Section -->
-    <section id="contact" class="py-24 px-6 bg-transparent relative">
-      <div class="container mx-auto text-center">
-        <h2 class="section-title">Get in Touch</h2>
-        <p class="mt-6 text-gray-300 text-lg">
-          I'd love to hear from you. Click below to send me an email!
-        </p>
-        <a href="mailto:almo30@elev.tec.dk" class="contact-btn mt-8 inline-block" aria-label="Send Email">
-          <i class="fas fa-envelope mr-2"></i>Mail Me
-        </a>
-      </div>
-    </section>
-  </div>
-  
-  <!-- Footer -->
-  <footer class="bg-gradient-to-br from-gray-900 to-gray-900">
-    <div class="container mx-auto px-6 py-8 grid md:grid-cols-3 gap-8">
-      <!-- About -->
-      <div>
-        <h4 class="text-lg font-semibold mb-4">About Me</h4>
-        <p class="text-gray-400">
-          I'm Alexander Holm Mortensen, a Software Developer passionate about crafting digital experiences using modern web technologies.
-        </p>
-      </div>
-      <!-- Quick Links -->
-      <div>
-        <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
-        <ul class="space-y-2">
-          <li><a href="#about" class="nav-link hover:text-purple-400">About</a></li>
-          <li><a href="#experience" class="nav-link hover:text-purple-400">Experience</a></li>
-          <li><a href="#projects" class="nav-link hover:text-purple-400">Projects</a></li>
-          <li><a href="#skills" class="nav-link hover:text-purple-400">Skills</a></li>
-          <li><a href="#contact" class="nav-link hover:text-purple-400">Contact</a></li>
-        </ul>
-      </div>
-      <!-- Contact & Social -->
-      <div>
-        <h4 class="text-lg font-semibold mb-4">Contact</h4>
-        <p class="text-gray-400 mb-2">
-          Email: <a href="mailto:almo30@elev.tec.dk" class="hover:text-purple-400">almo30@elev.tec.dk</a>
-        </p>
-        <p class="text-gray-400 mb-4">
-          Phone: <a href="tel:+4522987383" class="hover:text-purple-400">+45 2298 7383</a>
-        </p>
-        <div class="flex space-x-4">
-          <a href="https://github.com/alex404hm" target="_blank" class="social-link" aria-label="GitHub">
-            <i class="fab fa-github text-2xl"></i>
-          </a>
-        </div>
-      </div>
+    <!-- Floating Action Buttons -->
+    <div class="floating-actions">
     </div>
-    <div class="border-t border-gray-700 py-4 text-center">
-      <p class="text-gray-500">&copy; 2025 Alexander Holm Mortensen. All Rights Reserved.</p>
-    </div>
-  </footer>
-  
-  <!-- Jump to Top Button -->
-  <button id="toTopBtn" title="Back to top" aria-label="Back to top">
-    <i class="fas fa-arrow-up"></i>
-  </button>
-  
-  <!-- ==============================
-       Scripts & Animations
-  ============================== -->
-  <script>
-    /* --- Mobile Menu Toggle --- */
-    const menuBtn = document.getElementById('menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-    menuBtn.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
-      // Rotate menu button icon
-      menuBtn.querySelector('svg').style.transform =
-        mobileMenu.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(90deg)';
-      mobileMenu.classList.toggle('mobile-menu-open');
-    });
-  
-    /* --- GSAP Setup & Scroll Animations --- */
-    gsap.registerPlugin(ScrollTrigger);
-  
-    // Animate Navbar on Page Load
-    gsap.to("#navbar", { 
-      duration: 1, 
-      opacity: 1, 
-      y: 0,
-      ease: "power2.out" 
-    });
-  
-    // Change Navbar Background on Scroll
-    window.addEventListener('scroll', () => {
-      if (window.pageYOffset > 50) {
-        document.getElementById("navbar").classList.add("scrolled");
-      } else {
-        document.getElementById("navbar").classList.remove("scrolled");
-      }
-    });
-  
-    // Animate Sections on Scroll & Reveal Title Underlines
-    gsap.utils.toArray("section").forEach(section => {
-      gsap.from(section, {
-        opacity: 0,
-        y: 50,
-        duration: 1,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: section,
-          start: "top 80%",
-          toggleActions: "play none none none"
-        },
-        onComplete: () => {
-          const title = section.querySelector(".section-title");
-          if (title) title.classList.add("revealed");
-        }
-      });
-    });
-  
-    // Animate Skill Bars on Scroll
-    gsap.utils.toArray(".skill-bar").forEach(bar => {
-      const percent = bar.getAttribute("data-skill");
-      gsap.to(bar, {
-        opacity: 1,
-        scaleX: 1,
-        duration: 1,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: bar,
-          start: "top 90%",
-          toggleActions: "play none none none"
-        }
-      });
-      // Animate the inner fill width
-      const fill = bar.querySelector("div > div");
-      gsap.to(fill, {
-        width: percent + "%",
-        duration: 1.5,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: bar,
-          start: "top 90%",
-          toggleActions: "play none none none"
-        }
-      });
-    });
-  
-    /* --- Jump to Top Button --- */
-    const toTopBtn = document.getElementById("toTopBtn");
-    window.addEventListener("scroll", () => {
-      if (window.pageYOffset > 300) {
-        toTopBtn.classList.add("show");
-      } else {
-        toTopBtn.classList.remove("show");
-      }
-    });
-    toTopBtn.addEventListener("click", () => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-  
-    /* --- Navbar Active Link Highlight (IntersectionObserver) --- */
-    const sections = document.querySelectorAll("section");
-    const navLinks = document.querySelectorAll(".nav-link");
-    const observerOptions = { threshold: 0.5 };
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          navLinks.forEach(link => link.classList.remove("active"));
-          const activeLink = document.querySelector(`a[href="#${entry.target.id}"]`);
-          activeLink?.classList.add("active");
-        }
-      });
-    }, observerOptions);
-    sections.forEach(section => observer.observe(section));
-  
-    /* --- Optional: GSAP Parallax for Blobs --- */
-    gsap.to(".blob", {
-      y: 100,
-      ease: "none",
-      scrollTrigger: {
-        trigger: "body",
-        start: "top top",
-        end: "bottom bottom",
-        scrub: true
-      }
-    });
-  </script>
 </body>
 </html>
