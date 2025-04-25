@@ -3,11 +3,9 @@ document.addEventListener("DOMContentLoaded", init);
 function init() {
   initMobileMenuToggle();
   initSmoothScrolling();
-  initTypingEffect();
-  initGradientBlobs();
-  initScrollToTopButton();
   initCurrentYear();
   fetchGitHubProjects();
+  initJumpToTopButton();
 }
 
 function initMobileMenuToggle() {
@@ -17,13 +15,10 @@ function initMobileMenuToggle() {
 
   function toggleMenu() {
     toggle.classList.toggle("menu-open");
-    menu.classList.toggle("opacity-0");
-    menu.classList.toggle("pointer-events-none");
-    menu.classList.toggle("opacity-100");
-    menu.classList.toggle("pointer-events-auto");
-    document.body.style.overflow = menu.classList.contains("opacity-0")
-      ? "auto"
-      : "hidden";
+    menu.classList.toggle("show");
+    document.body.style.overflow = menu.classList.contains("show")
+      ? "hidden"
+      : "auto";
   }
 
   toggle.addEventListener("click", (e) => {
@@ -31,9 +26,10 @@ function initMobileMenuToggle() {
     toggleMenu();
   });
 
+  // Close menu when clicking outside
   document.addEventListener("click", (e) => {
     if (
-      !menu.classList.contains("opacity-0") &&
+      menu.classList.contains("show") &&
       !menu.contains(e.target) &&
       e.target !== toggle
     ) {
@@ -41,10 +37,16 @@ function initMobileMenuToggle() {
     }
   });
 
-  links.forEach((link) => link.addEventListener("click", toggleMenu));
+  // Close menu when clicking on links
+  links.forEach((link) => {
+    link.addEventListener("click", () => {
+      toggleMenu();
+    });
+  });
 
+  // Close menu on escape key
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && !menu.classList.contains("opacity-0")) {
+    if (e.key === "Escape" && menu.classList.contains("show")) {
       toggleMenu();
     }
   });
@@ -68,87 +70,6 @@ function initSmoothScrolling() {
         });
       }
     });
-  });
-}
-
-function initTypingEffect() {
-  const phrases = [
-    "I'm a Software Developer",
-    "I create innovative solutions",
-    "I build modern web applications",
-    "I'm passionate about coding",
-  ];
-
-  const typedText = document.getElementById("typed-text");
-  let phraseIndex = 0;
-  let charIndex = 0;
-  let isDeleting = false;
-  const typeSpeed = 100;
-
-  function type() {
-    const currentPhrase = phrases[phraseIndex];
-    typedText.textContent = isDeleting
-      ? currentPhrase.substring(0, charIndex - 1)
-      : currentPhrase.substring(0, charIndex + 1);
-
-    charIndex = isDeleting ? charIndex - 1 : charIndex + 1;
-
-    if (!isDeleting && charIndex === currentPhrase.length) {
-      isDeleting = true;
-      setTimeout(type, 1500);
-    } else if (isDeleting && charIndex === 0) {
-      isDeleting = false;
-      phraseIndex = (phraseIndex + 1) % phrases.length;
-      setTimeout(type, 500);
-    } else {
-      setTimeout(type, typeSpeed);
-    }
-  }
-
-  setTimeout(type, 1000);
-}
-
-function initGradientBlobs() {
-  const blobs = document.querySelectorAll(".gradient-blob");
-
-  if (typeof gsap !== "undefined") {
-    blobs.forEach((blob, index) => {
-      gsap.to(blob, {
-        y: 20 + index * 10,
-        duration: 3 + index * 0.5,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      });
-
-      gsap.to(blob, {
-        opacity: 0.3 + index * 0.05,
-        duration: 4 + index * 0.7,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      });
-    });
-  }
-}
-
-function initScrollToTopButton() {
-  const button = document.createElement("button");
-  button.id = "scroll-to-top";
-  button.className =
-    "fixed bottom-8 right-8 bg-blue-600 text-white p-3 rounded-full shadow-lg opacity-0 transition-all duration-300 transform translate-y-10 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900 z-50";
-  button.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>`;
-  document.body.appendChild(button);
-
-  window.addEventListener("scroll", () => {
-    button.classList.toggle("opacity-0", window.scrollY <= 300);
-    button.classList.toggle("translate-y-10", window.scrollY <= 300);
-    button.classList.toggle("opacity-100", window.scrollY > 300);
-    button.classList.toggle("translate-y-0", window.scrollY > 300);
-  });
-
-  button.addEventListener("click", () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
   });
 }
 
@@ -183,89 +104,70 @@ async function fetchGitHubProjects() {
 function createProjectCard(project) {
   const card = document.createElement("div");
   card.className =
-    "bg-gray-800 p-6 rounded-lg border border-gray-700 transform hover:scale-105 transition-all duration-300 shadow-lg";
+    "project-card bg-gray-800 rounded-lg overflow-hidden border border-gray-700 transform transition-all duration-300 hover:scale-105 hover:border-blue-500 hover:shadow-lg hover:shadow-blue-500/20";
+
   card.innerHTML = `
-        <h3 class="text-xl font-semibold mb-2 text-white">
-            <a href="${
-              project.html_url
-            }" target="_blank" class="hover:text-blue-400 transition-colors">${
-    project.name
-  }</a>
-        </h3>
-        ${
-          project.description
-            ? `<p class="text-gray-400 mb-4">${project.description}</p>`
-            : ""
-        }
-        <div class="flex space-x-4">
-            <a href="${
-              project.html_url
-            }" target="_blank" class="text-gray-400 hover:text-white transition-colors flex items-center space-x-1">
-                <i class="fab fa-github"></i>
-                <span>View Code</span>
-            </a>
-            ${
-              project.homepage
-                ? `<a href="${project.homepage}" target="_blank" class="text-gray-400 hover:text-white transition-colors flex items-center space-x-1">
-                       <i class="fas fa-external-link-alt"></i>
-                       <span>Live Site</span>
-                   </a>`
-                : ""
-            }
+    <div class="p-6">
+      <h3 class="text-xl font-semibold mb-2 text-white group">
+        <a href="${
+          project.html_url
+        }" target="_blank" class="hover:text-blue-400 transition-colors duration-300">
+          ${project.name}
+        </a>
+      </h3>
+      <p class="text-gray-400 mb-4 min-h-[3rem]">
+        ${project.description || "No description available"}
+      </p>
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-2 text-sm text-gray-400">
+          <i class="fas fa-code-branch"></i>
+          <span>${project.language || "N/A"}</span>
         </div>
-    `;
-  return card;
-}
-
-// Helper function to validate email
-function isValidEmail(email) {
-  const re =
-    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(email).toLowerCase());
-}
-
-// Show notification
-function showNotification(message, type = "info") {
-  // Create notification element
-  const notification = document.createElement("div");
-  notification.className = `fixed bottom-4 right-4 px-6 py-3 rounded-lg shadow-lg z-50 transform transition-all duration-300 translate-y-20 opacity-0 ${
-    type === "success"
-      ? "bg-green-600"
-      : type === "error"
-      ? "bg-red-600"
-      : "bg-blue-600"
-  } text-white`;
-  notification.innerHTML = `
-    <div class="flex items-center">
-      <span class="mr-2">
-        ${
-          type === "success"
-            ? '<i class="fas fa-check-circle"></i>'
-            : type === "error"
-            ? '<i class="fas fa-exclamation-circle"></i>'
-            : '<i class="fas fa-info-circle"></i>'
-        }
-      </span>
-      <span>${message}</span>
+        <div class="flex space-x-4">
+          <a href="${project.html_url}" target="_blank" 
+             class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center space-x-1 group">
+            <i class="fab fa-github group-hover:scale-110 transition-transform duration-300"></i>
+            <span class="group-hover:text-blue-400 transition-colors duration-300">View Code</span>
+          </a>
+          ${
+            project.homepage
+              ? `
+            <a href="${project.homepage}" target="_blank" 
+               class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center space-x-1 group">
+              <i class="fas fa-external-link-alt group-hover:scale-110 transition-transform duration-300"></i>
+              <span class="group-hover:text-blue-400 transition-colors duration-300">Live Site</span>
+            </a>
+          `
+              : ""
+          }
+        </div>
+      </div>
     </div>
   `;
 
-  // Add to DOM
-  document.body.appendChild(notification);
+  return card;
+}
 
-  // Animate in
-  setTimeout(() => {
-    notification.classList.remove("translate-y-20", "opacity-0");
-    notification.classList.add("translate-y-0", "opacity-100");
-  }, 10);
+function initJumpToTopButton() {
+  const jumpToTopButton = document.getElementById("jump-to-top");
+  if (!jumpToTopButton) return;
 
-  // Remove after delay
-  setTimeout(() => {
-    notification.classList.remove("translate-y-0", "opacity-100");
-    notification.classList.add("translate-y-20", "opacity-0");
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 300) {
+      jumpToTopButton.classList.add("visible");
+      jumpToTopButton.style.opacity = "1";
+      jumpToTopButton.style.transform = "translateY(0)";
+    } else {
+      jumpToTopButton.classList.remove("visible");
+      jumpToTopButton.style.opacity = "0";
+      jumpToTopButton.style.transform = "translateY(10px)";
+    }
+  });
 
-    setTimeout(() => {
-      document.body.removeChild(notification);
-    }, 300);
-  }, 5000);
+  jumpToTopButton.addEventListener("click", () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  });
 }
