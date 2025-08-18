@@ -16,7 +16,7 @@ h6 {
 /* Navigation Styles */
 .nav-link {
   position: relative;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* var(--transition-cubic) */
+  transition: color 0.3s ease, transform 0.3s ease;
   padding: 0.5rem 0;
   overflow: hidden;
 }
@@ -67,7 +67,7 @@ h6 {
   transform: translateY(-100%);
   opacity: 0;
   visibility: hidden;
-  transition: var(--transition-cubic);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease, visibility 0.4s ease;
 }
 
 #mobile-menu.show {
@@ -79,7 +79,7 @@ h6 {
 .mobile-nav-link {
   opacity: 0;
   transform: translateY(10px);
-  transition: var(--transition-cubic);
+  transition: opacity 0.35s ease, transform 0.35s ease;
 }
 
 #mobile-menu.show .mobile-nav-link {
@@ -362,6 +362,27 @@ h6 {
   z-index: 1;
 }
 
+/* Center timeline line */
+.timeline-line {
+  width: 2px;
+  background: linear-gradient(180deg,
+    rgba(59,130,246,0),
+    rgba(59,130,246,0.7),
+    rgba(59,130,246,0)
+  );
+  opacity: 0.9;
+  left: 1.25rem; /* align near the dots on mobile */
+}
+
+/* Modern timeline dots */
+.timeline-dot {
+  border: 2px solid #0b1324; /* matches darker-blue */
+  box-shadow: 0 6px 14px rgba(0,0,0,0.35);
+}
+.timeline-dot.bg-blue-500 { box-shadow: 0 0 0 4px rgba(59,130,246,0.2), 0 6px 14px rgba(0,0,0,0.35); }
+.timeline-dot.bg-green-500 { box-shadow: 0 0 0 4px rgba(16,185,129,0.2), 0 6px 14px rgba(0,0,0,0.35); }
+.timeline-dot.bg-purple-500 { box-shadow: 0 0 0 4px rgba(139,92,246,0.2), 0 6px 14px rgba(0,0,0,0.35); }
+
 
 .project-card h3 a::after {
   content: '';
@@ -376,6 +397,96 @@ h6 {
 
 .project-card:hover h3 a::after {
   width: 100%;
+}
+
+/* Modern education cards */
+.edu-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.75rem; /* rounded-xl */
+  border: 1px solid rgba(71, 85, 105, 0.6);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s ease, border-color 0.3s ease;
+}
+
+.edu-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #60a5fa, #3b82f6);
+}
+
+.edu-card.edu-green::before { background: linear-gradient(90deg, #34d399, #10b981); }
+.edu-card.edu-purple::before { background: linear-gradient(90deg, #a78bfa, #8b5cf6); }
+
+.edu-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.35);
+}
+
+.edu-badge {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 0.95rem;
+  box-shadow: 0 10px 20px rgba(59, 130, 246, 0.25);
+}
+
+.edu-blue .edu-badge { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+.edu-green .edu-badge { background: linear-gradient(135deg, #10b981, #059669); }
+.edu-purple .edu-badge { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+
+/* Alternating timeline layout */
+.edu-timeline {
+  position: relative;
+}
+.edu-timeline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, rgba(59,130,246,0), rgba(59,130,246,0.7), rgba(59,130,246,0));
+}
+
+.edu-item {
+  position: relative;
+}
+.edu-item .edu-connector {
+  position: absolute;
+  top: 1.25rem;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  transform: translate(-50%, -50%) rotate(45deg);
+  background: linear-gradient(135deg, #60a5fa, #3b82f6);
+  border: 2px solid #0b1324;
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+}
+
+@media (min-width: 1024px) {
+  .edu-item-left { padding-right: 3rem; }
+  .edu-item-right { padding-left: 3rem; }
+}
+
+/* Responsive positioning for the education timeline center line */
+@media (min-width: 640px) {
+  .education-timeline .timeline-line { left: 1.75rem; }
+}
+@media (min-width: 768px) {
+  .education-timeline .timeline-line { left: 50%; transform: translateX(-50%); }
 }
 
 /* Resume Button */
@@ -524,6 +635,105 @@ a[href='/resume.pdf'].download-clicked {
   50% {
     opacity: 0;
   }
+}
+
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes floatSlow {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  animation: fadeUp 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-float {
+  animation: floatSlow 6s ease-in-out infinite;
+}
+
+/* Buttons */
+.btn-gradient {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: #ffffff;
+  transition: transform 0.2s ease, box-shadow 0.3s ease, filter 0.3s ease;
+  box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2);
+}
+
+/* Error pages background enhancements */
+.error-bg {
+  position: relative;
+}
+.error-bg::before {
+  content: '';
+  position: absolute;
+  inset: -20%;
+  background:
+    radial-gradient(60rem 60rem at 80% 10%, rgba(59,130,246,0.15), transparent 60%),
+    radial-gradient(50rem 50rem at 10% 80%, rgba(147,51,234,0.12), transparent 60%),
+    radial-gradient(40rem 40rem at 20% 20%, rgba(16,185,129,0.10), transparent 60%);
+  filter: blur(20px);
+  z-index: 0;
+}
+.error-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(255,255,255,0.03) 0,
+    rgba(255,255,255,0.03) 1px,
+    transparent 1px,
+    transparent 12px
+  );
+  opacity: 0.25;
+  pointer-events: none;
+  z-index: 0;
+}
+.btn-gradient:hover {
+  filter: brightness(1.05);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(59, 130, 246, 0.28);
+}
+
+.btn-gradient:active {
+  transform: translateY(0);
+}
+
+.btn-outline {
+  background: rgba(15, 23, 42, 0.6);
+  color: #a1a1aa;
+  border: 1px solid rgba(75, 85, 99, 0.6);
+  transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
+}
+
+.btn-outline:hover {
+  background: rgba(31, 41, 55, 0.7);
+  color: #e5e7eb;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(31, 41, 55, 0.3);
+}
+
+.btn-outline:active {
+  transform: translateY(0);
 }
 
 @keyframes gradientFlow {
