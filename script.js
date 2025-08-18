@@ -3,22 +3,25 @@ document.addEventListener("DOMContentLoaded", init);
 function init() {
   initMobileMenuToggle();
   initSmoothScrolling();
+  initRevealOnScroll();
   initCurrentYear();
-  fetchGitHubProjects();
+  initProjectsLazyLoad();
   initJumpToTopButton();
+  initContactForm();
 }
 
 function initMobileMenuToggle() {
   const toggle = document.getElementById("mobile-menu-toggle");
   const menu = document.getElementById("mobile-menu");
   const links = document.querySelectorAll(".mobile-nav-link");
+  if (!toggle || !menu) return;
 
   function toggleMenu() {
-    toggle.classList.toggle("menu-open");
-    menu.classList.toggle("show");
-    document.body.style.overflow = menu.classList.contains("show")
-      ? "hidden"
-      : "auto";
+    const willShow = !menu.classList.contains("show");
+    menu.classList.toggle("show", willShow);
+    toggle.setAttribute("aria-expanded", willShow ? "true" : "false");
+    menu.setAttribute("aria-hidden", willShow ? "false" : "true");
+    document.body.style.overflow = willShow ? "hidden" : "auto";
   }
 
   toggle.addEventListener("click", (e) => {
@@ -52,25 +55,91 @@ function initMobileMenuToggle() {
   });
 }
 
+function getHeaderOffset() {
+  const header = document.querySelector("header");
+  return header ? header.offsetHeight : 0;
+}
+
+function smoothScrollTo(targetY, durationMs) {
+  const startY = window.pageYOffset;
+  const distanceY = targetY - startY;
+  const startTime = performance.now();
+
+  function easeInOutCubic(t) {
+    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  }
+
+  function step(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / durationMs, 1);
+    const eased = easeInOutCubic(progress);
+    window.scrollTo(0, Math.round(startY + distanceY * eased));
+    if (progress < 1) requestAnimationFrame(step);
+  }
+
+  requestAnimationFrame(step);
+}
+
 function initSmoothScrolling() {
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener("click", function (e) {
-      e.preventDefault();
       const targetId = this.getAttribute("href");
-      if (targetId === "#") return;
+      if (!targetId || targetId === "#") return;
       const targetElement = document.querySelector(targetId);
-      if (targetElement) {
-        const headerOffset = 80;
-        const elementPosition = targetElement.getBoundingClientRect().top;
-        const offsetPosition =
-          elementPosition + window.pageYOffset - headerOffset;
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "smooth",
-        });
+      if (!targetElement) return;
+
+      e.preventDefault();
+
+      const headerOffset = getHeaderOffset();
+      const elementPosition =
+        targetElement.getBoundingClientRect().top + window.pageYOffset;
+      const targetY = Math.max(elementPosition - headerOffset, 0);
+
+      if (prefersReducedMotion) {
+        window.scrollTo(0, targetY);
+      } else {
+        smoothScrollTo(targetY, 700);
+      }
+
+      if (history.pushState) {
+        history.pushState(null, "", targetId);
+      } else {
+        window.location.hash = targetId;
       }
     });
   });
+}
+
+function initRevealOnScroll() {
+  const elements = document.querySelectorAll('.reveal');
+  if (elements.length === 0) return;
+
+  const prefersReducedMotion = window.matchMedia(
+    '(prefers-reduced-motion: reduce)'
+  ).matches;
+
+  if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+    elements.forEach((el) => el.classList.add('is-visible'));
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { rootMargin: '0px 0px -10% 0px', threshold: 0.15 }
+  );
+
+  elements.forEach((el) => observer.observe(el));
 }
 
 function initCurrentYear() {
@@ -169,5 +238,52 @@ function initJumpToTopButton() {
       top: 0,
       behavior: "smooth",
     });
+  });
+}
+
+function initProjectsLazyLoad() {
+  const section = document.getElementById("projects");
+  if (!section) return;
+  const container = document.getElementById("projects-container");
+  const triggerFetch = () => {
+    fetchGitHubProjects();
+    observer.disconnect();
+  };
+  if (!("IntersectionObserver" in window)) {
+    triggerFetch();
+    return;
+  }
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) triggerFetch();
+      });
+    },
+    { rootMargin: "200px 0px" }
+  );
+  observer.observe(section);
+}
+
+function initContactForm() {
+  const form = document.getElementById("contact-form");
+  const status = document.getElementById("contact-status");
+  const submitBtn = document.getElementById("contact-submit");
+  if (!form || !status || !submitBtn) return;
+
+  function setStatus(message, type) {
+    status.textContent = message;
+    status.className = "text-sm " + (type === "error" ? "text-red-400" : type === "success" ? "text-green-400" : "text-gray-400");
+  }
+
+  form.addEventListener("submit", async (e) => {
+    // Let Getform handle submission normally; just show a progress hint.
+    setStatus("Sending via secure form...", "info");
+    submitBtn.disabled = true;
+    submitBtn.style.opacity = "0.7";
+    // Re-enable after a short delay in case of client-side navigation
+    setTimeout(() => {
+      submitBtn.disabled = false;
+      submitBtn.style.opacity = "1";
+    }, 4000);
   });
 }
