@@ -17,6 +17,15 @@
     <meta name="twitter:description" content="Portfolio showcasing Python, HTML, and CSS projects by Alexander Holm Mortensen">
     <meta name="twitter:image" content="https://www.holdsport.dk/media/W1siZiIsIjIwMjMvMDkvMjkvMXd3cHhseTl1ZF84NTEwMzAzRl8wODMyXzQ0OENfOUQ1Rl85QzgwMDcxQzJDMzcuanBnIl0sWyJwIiwidGh1bGIiLCI2MDB4NjAwIyJdXQ==?sha=0217890684e578f8">
     <link rel="canonical" href="https://alexander-holm.com">
+    
+    <!-- Pirsch Analytics - Professional visitor tracking -->
+    <script defer src="https://api.pirsch.io/pa.js"
+        id="pianjs"
+        data-code="qTEM5jBQRA6SJJfi1HE8fQkCHrKu7hPq"></script>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💻%3C/text%3E%3C/svg%3E">
+    
     <title>Alexander Holm Mortensen - Software Developer Portfolio</title>
 
     <!-- Tailwind CSS -->
@@ -51,6 +60,10 @@
     <!-- Font Awesome (preloaded to reduce render-blocking) -->
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"></noscript>
+    
+    <!-- Devicons for programming language icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+    
     <link rel="stylesheet" href="style.css">
     <style>
       /* Smooth scrolling for the entire page */
@@ -521,6 +534,209 @@
               transform: scale(1.05);
           }
       }
+
+      /* Counter Animation Styles */
+      .counter {
+          display: inline-block;
+          font-variant-numeric: tabular-nums;
+          transition: all 0.3s ease;
+          font-weight: 700;
+      }
+
+      /* Enhanced Pulsing animation for counters */
+      @keyframes counterPulse {
+          0% { 
+              transform: scale(1); 
+              text-shadow: 0 0 0 rgba(59, 130, 246, 0);
+          }
+          50% { 
+              transform: scale(1.05); 
+              text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+          }
+          100% { 
+              transform: scale(1); 
+              text-shadow: 0 0 0 rgba(59, 130, 246, 0);
+          }
+      }
+
+      .counter.animating {
+          animation: counterPulse 0.8s ease-in-out;
+      }
+
+      /* Enhanced hover effects for stats cards */
+      .stats-card {
+          background: linear-gradient(135deg, rgba(75, 85, 99, 0.2) 0%, rgba(55, 65, 81, 0.2) 100%);
+          backdrop-filter: blur(15px);
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          border-radius: 1rem;
+          overflow: hidden;
+          position: relative;
+      }
+
+      .stats-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 2px;
+          background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.5), transparent);
+          transform: translateX(-100%);
+          transition: transform 0.6s ease;
+      }
+
+      .stats-card:hover::before {
+          transform: translateX(100%);
+      }
+
+      .stats-card:hover {
+          background: linear-gradient(135deg, rgba(75, 85, 99, 0.3) 0%, rgba(55, 65, 81, 0.3) 100%);
+          transform: translateY(-8px) scale(1.02);
+          box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05);
+      }
+
+      .stats-card:hover .counter {
+          animation: counterPulse 0.8s ease-in-out;
+      }
+
+      /* Enhanced icon animations */
+      .stats-card:hover i {
+          transform: scale(1.2) rotate(5deg);
+          transition: transform 0.3s ease;
+          filter: drop-shadow(0 0 8px currentColor);
+      }
+
+      /* Loading spinner animation */
+      @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+      }
+
+      .fa-spin {
+          animation: spin 1s linear infinite;
+      }
+
+      /* Gradient text animation */
+      @keyframes gradientShift {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+      }
+
+      .animated-gradient {
+          background: linear-gradient(45deg, #3b82f6, #8b5cf6, #06b6d4, #10b981);
+          background-size: 300% 300%;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          animation: gradientShift 3s ease-in-out infinite;
+      }
+
+      /* Real-time data indicator */
+      .live-indicator {
+          position: relative;
+      }
+
+      .live-indicator::after {
+          content: '';
+          position: absolute;
+          top: -2px;
+          right: -2px;
+          width: 8px;
+          height: 8px;
+          background: #10b981;
+          border-radius: 50%;
+          animation: pulse 2s ease-in-out infinite;
+          box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+      }
+
+      @keyframes pulse {
+          0% {
+              box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+          }
+          70% {
+              box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+          }
+          100% {
+              box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+          }
+      }
+
+      /* Responsive adjustments for stats */
+      @media (max-width: 768px) {
+          .stats-card {
+              padding: 1rem;
+          }
+          
+          .counter {
+              font-size: 2rem !important;
+          }
+      }
+
+      /* Enhanced skill icons styling */
+      .skill-icon {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 4rem;
+          height: 4rem;
+          margin: 0.5rem;
+          background: linear-gradient(135deg, rgba(75, 85, 99, 0.3) 0%, rgba(55, 65, 81, 0.3) 100%);
+          border: 1px solid rgba(75, 85, 99, 0.5);
+          border-radius: 1rem;
+          transition: all 0.3s ease;
+          backdrop-filter: blur(10px);
+      }
+
+      .skill-icon:hover {
+          transform: translateY(-4px) scale(1.05);
+          background: linear-gradient(135deg, rgba(75, 85, 99, 0.4) 0%, rgba(55, 65, 81, 0.4) 100%);
+          border-color: rgba(59, 130, 246, 0.6);
+          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 20px rgba(59, 130, 246, 0.2);
+      }
+
+      .skill-icon i {
+          font-size: 2rem;
+          transition: all 0.3s ease;
+      }
+
+      .skill-icon:hover i {
+          transform: scale(1.1);
+          filter: drop-shadow(0 0 8px currentColor);
+      }
+
+      /* Specific colors for different skill icons */
+      .skill-icon:nth-child(1):hover { /* Python */
+          border-color: #3776ab;
+          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 20px rgba(55, 118, 171, 0.3);
+      }
+
+      .skill-icon:nth-child(2):hover { /* HTML5 */
+          border-color: #e34c26;
+          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 20px rgba(227, 76, 38, 0.3);
+      }
+
+      .skill-icon:nth-child(3):hover { /* CSS3 */
+          border-color: #1572b6;
+          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 20px rgba(21, 114, 182, 0.3);
+      }
+
+      .skill-icon:nth-child(4):hover { /* C# */
+          border-color: #239120;
+          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 20px rgba(35, 145, 32, 0.3);
+      }
+
+      @media (max-width: 768px) {
+          .skill-icon {
+              width: 3.5rem;
+              height: 3.5rem;
+              margin: 0.25rem;
+          }
+          
+          .skill-icon i {
+              font-size: 1.5rem;
+          }
+      }
     </style>
     <script type="application/ld+json">
     {
@@ -678,6 +894,83 @@
             </div>
         </section>
 
+        <!-- Statistics Counter Section -->
+        <!-- Real-time stats: Visitor count via CountAPI.xyz, GitHub data via GitHub API v3 -->
+        <section id="stats" class="py-16 bg-gradient-to-r from-darker-blue/80 to-dark-blue/80 border-y border-gray-800 relative overflow-hidden">
+            <!-- Animated Background Elements -->
+            <div class="absolute inset-0">
+                <div class="absolute top-10 left-10 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
+                <div class="absolute bottom-10 right-10 w-40 h-40 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-green-500/5 rounded-full blur-3xl animate-pulse delay-500"></div>
+            </div>
+            
+            <div class="container mx-auto px-4 relative z-10">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Live Portfolio Stats</h2>
+                    <p class="text-gray-400 max-w-2xl mx-auto">Real-time data showcasing my development activity</p>
+                </div>
+                
+                <div class="max-w-5xl mx-auto">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+                        <!-- Website Visitors -->
+                        <div class="stats-card text-center p-8 rounded-xl border border-gray-700 hover:border-blue-500 group relative">
+                            <div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="relative z-10">
+                                <div class="text-4xl md:text-5xl lg:text-6xl font-bold text-blue-400 mb-4">
+                                    <span id="visitor-count" class="counter" data-target="0">0</span>
+                                </div>
+                                <div class="text-base md:text-lg text-gray-400 uppercase tracking-wider font-medium">
+                                    <i class="fas fa-eye mr-2"></i>
+                                    Website Visitors
+                                </div>
+                                <div class="text-sm text-gray-500 mt-2">
+                                    Total portfolio views
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- GitHub Repositories -->
+                        <div class="stats-card text-center p-8 rounded-xl border border-gray-700 hover:border-green-500 group relative">
+                            <div class="absolute inset-0 bg-gradient-to-br from-green-500/5 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="relative z-10">
+                                <div class="text-4xl md:text-5xl lg:text-6xl font-bold text-green-400 mb-4">
+                                    <span id="github-repos" class="counter" data-target="0">
+                                        <i class="fas fa-spinner fa-spin text-3xl"></i>
+                                    </span>
+                                </div>
+                                <div class="text-base md:text-lg text-gray-400 uppercase tracking-wider font-medium">
+                                    <i class="fab fa-github mr-2"></i>
+                                    Repositories
+                                </div>
+                                <div class="text-sm text-gray-500 mt-2">
+                                    Live from GitHub API
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Commits This Year -->
+                        <div class="stats-card text-center p-8 rounded-xl border border-gray-700 hover:border-purple-500 group relative">
+                            <div class="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="relative z-10">
+                                <div class="text-4xl md:text-5xl lg:text-6xl font-bold text-purple-400 mb-4">
+                                    <span id="github-commits" class="counter" data-target="0">
+                                        <i class="fas fa-spinner fa-spin text-3xl"></i>
+                                    </span>
+                                </div>
+                                <div class="text-base md:text-lg text-gray-400 uppercase tracking-wider font-medium">
+                                    <i class="fas fa-code-branch mr-2"></i>
+                                    Commits This Year
+                                </div>
+                                <div class="text-sm text-gray-500 mt-2">
+                                    GitHub activity 2025
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- About Me Section -->
         <section id="about" class="py-12 md:py-16">
            <div class="container mx-auto px-4">
@@ -717,13 +1010,16 @@
                                <!-- Skill Icons -->
                                <div class="skill-icons-container flex flex-wrap justify-center md:justify-start">
                                    <div class="skill-icon" title="Python">
-                                       <i class="fab fa-python"></i>
+                                       <i class="devicon-python-plain colored"></i>
                                    </div>
                                    <div class="skill-icon" title="HTML5">
-                                       <i class="fab fa-html5"></i>
+                                       <i class="devicon-html5-plain colored"></i>
                                    </div>
                                    <div class="skill-icon" title="CSS3">
-                                       <i class="fab fa-css3-alt"></i>
+                                       <i class="devicon-css3-plain colored"></i>
+                                   </div>
+                                   <div class="skill-icon" title="C#">
+                                       <i class="devicon-csharp-plain colored"></i>
                                    </div>
                                </div>
                            </div>

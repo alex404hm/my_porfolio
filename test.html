@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Test Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body class="bg-gray-900 text-white">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-8 text-center">Portfolio Functionality Test</h1>
+        
+        <!-- Test Stats Section -->
+        <div class="bg-gray-800 rounded-lg p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4">Stats Test</h2>
+            <div class="grid grid-cols-3 gap-4 text-center">
+                <div>
+                    <div class="text-2xl font-bold">
+                        <span id="visitor-count" class="counter" data-target="0">0</span>
+                    </div>
+                    <div class="text-sm text-gray-400">Visitors</div>
+                </div>
+                <div>
+                    <div class="text-2xl font-bold">
+                        <span id="github-repos" class="counter" data-target="0">0</span>
+                    </div>
+                    <div class="text-sm text-gray-400">GitHub Repos</div>
+                </div>
+                <div>
+                    <div class="text-2xl font-bold">
+                        <span id="github-commits" class="counter" data-target="0">0</span>
+                    </div>
+                    <div class="text-sm text-gray-400">Commits</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test Projects Section -->
+        <div class="bg-gray-800 rounded-lg p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4">Projects Test</h2>
+            <div id="projects-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="text-center text-gray-400">Loading projects...</div>
+            </div>
+        </div>
+
+        <!-- Test Mobile Menu -->
+        <div class="bg-gray-800 rounded-lg p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4">Mobile Menu Test</h2>
+            <button id="mobile-menu-toggle" class="bg-blue-600 text-white px-4 py-2 rounded">
+                Toggle Mobile Menu
+            </button>
+            <div id="mobile-menu" class="hidden mt-4 bg-gray-700 p-4 rounded">
+                <div class="text-center">Mobile Menu Content</div>
+            </div>
+        </div>
+
+        <!-- Test Contact Form -->
+        <div class="bg-gray-800 rounded-lg p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4">Contact Form Test</h2>
+            <form id="contact-form" class="space-y-4">
+                <input type="text" name="name" placeholder="Name" class="w-full px-3 py-2 bg-gray-700 rounded text-white" required>
+                <input type="email" name="email" placeholder="Email" class="w-full px-3 py-2 bg-gray-700 rounded text-white" required>
+                <textarea name="message" placeholder="Message" rows="3" class="w-full px-3 py-2 bg-gray-700 rounded text-white" required></textarea>
+                <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">Send Message</button>
+            </form>
+        </div>
+
+        <!-- Test Current Year -->
+        <div class="bg-gray-800 rounded-lg p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4">Current Year Test</h2>
+            <p>Copyright <span id="currentYear">----</span> Alexander Holm Mortensen</p>
+        </div>
+
+        <!-- Test Console Output -->
+        <div class="bg-gray-800 rounded-lg p-6">
+            <h2 class="text-xl font-semibold mb-4">Console Output</h2>
+            <div id="console-output" class="bg-black p-4 rounded text-green-400 font-mono text-sm max-h-64 overflow-y-auto">
+                <div>Console output will appear here...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Jump to Top Button -->
+    <button id="jump-to-top" class="fixed bottom-8 right-8 bg-blue-600 text-white p-3 rounded-full shadow-lg opacity-0 transition-all duration-300 transform translate-y-10 hover:bg-blue-700 focus:outline-none z-50">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Intercept console.log to display in the page
+        const consoleOutput = document.getElementById('console-output');
+        const originalLog = console.log;
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            const div = document.createElement('div');
+            div.textContent = args.join(' ');
+            consoleOutput.appendChild(div);
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        };
+
+        // Add some height to test scroll functionality
+        document.body.style.height = '200vh';
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
