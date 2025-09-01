@@ -4,12 +4,7 @@ body {
   scroll-behavior: smooth;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
   font-family: 'Poppins', sans-serif;
 }
 
@@ -28,15 +23,15 @@ h6 {
   height: 2px;
   bottom: -4px;
   left: 0;
-  background-color: #60a5fa; /* #60a5fa var(--primary-light);  Also used in typing cursor */
+  background-color: #60a5fa;
   transition: width 0.3s ease;
-  background: linear-gradient(90deg, #60a5fa, #3b82f6); /* var(--gradient); */
+  background: linear-gradient(90deg, #60a5fa, #3b82f6);
   transform: scaleX(0);
   transform-origin: left;
 }
 
 .nav-link:hover {
-  color: #60a5fa; /* var(--primary-light); */
+  color: #60a5fa;
   transform: translateY(-2px);
 }
 
@@ -47,7 +42,7 @@ h6 {
 
 /* Mobile Menu Animation */
 #mobile-menu-toggle[aria-expanded='true'] #line1 {
-  transform: translateY(8px) rotate(45deg); /* translateY(0.5rem) rotate(45deg); */
+  transform: translateY(8px) rotate(45deg);
 }
 
 #mobile-menu-toggle[aria-expanded='true'] #line2 {
@@ -55,7 +50,7 @@ h6 {
 }
 
 #mobile-menu-toggle[aria-expanded='true'] #line3 {
-  transform: translateY(-8px) rotate(-45deg); /* translateY(-0.5rem) rotate(-45deg); */
+  transform: translateY(-8px) rotate(-45deg);
 }
 
 #mobile-menu.open {
@@ -114,38 +109,6 @@ h6 {
   letter-spacing: 0.05em;
   margin-bottom: 1.5rem;
   position: relative;
-}
-
-.hero-content h1::after {
-  content: '';
-  position: absolute;
-  bottom: -0.5rem;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #3b82f6, transparent); /* var(--primary) */
-  opacity: 0.5;
-}
-
-.hero-content h1 span,
-.hero-content h2,
-.hero-content h3 {
-  position: relative;
-  display: inline-block;
-}
-
-.hero-content h1 span::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #3b82f6, transparent); /* var(--primary) */
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s ease;
 }
 
 .hero-content h2 {
@@ -213,7 +176,7 @@ h6 {
 .skill-icons-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start; /* center on mobile */
+  justify-content: flex-start;
   gap: 1.5rem;
   margin-top: 1rem;
 }
@@ -222,13 +185,13 @@ h6 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 3.5rem; /* 60px; */
-  height: 3.5rem; /* 60px; */
-  border-radius: 50%; /* 12px; */
-  background: rgba(59, 130, 246, 0.1); /* rgba(30, 41, 59, 0.8); */
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background: rgba(59, 130, 246, 0.1);
   border: 1px solid rgba(71, 85, 105, 0.5);
-  transition: var(--transition-cubic); /* all 0.3s ease; */
-  font-size: 1.5rem; /* 1.75rem; */
+  transition: all 0.3s ease;
+  font-size: 1.5rem;
   color: #60a5fa;
   position: relative;
   overflow: hidden;
@@ -238,18 +201,14 @@ h6 {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(59, 130, 246, 0.2),
-    rgba(99, 102, 241, 0.2)
-  );
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(99, 102, 241, 0.2));
   opacity: 0;
   transition: opacity 0.3s ease;
 }
 
 .skill-icon:hover {
   transform: translateY(-5px) scale(1.1);
-  box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2); /* 0 10px 20px -10px rgba(96, 165, 250, 0.5); */
+  box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2);
 }
 
 .skill-icon:hover::before {
@@ -258,12 +217,12 @@ h6 {
 
 .skill-icon i {
   font-size: 1.5rem;
-  color: #60a5fa; /* var(--primary-light); */
-  transition: var(--transition-default);
+  color: #60a5fa;
+  transition: all 0.3s ease;
 }
 
 .skill-icon:hover i {
-  color: #3b82f6; /* var(--primary); */
+  color: #3b82f6;
   transform: scale(1.2);
 }
 
@@ -628,8 +587,7 @@ a[href='/resume.pdf'].download-clicked {
 
 /* Animations */
 @keyframes blink {
-  0%,
-  100% {
+  0%, 100% {
     opacity: 1;
   }
   50% {
@@ -668,6 +626,30 @@ a[href='/resume.pdf'].download-clicked {
 
 .animate-float {
   animation: floatSlow 6s ease-in-out infinite;
+}
+
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes downloadPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 /* Buttons */

@@ -18,19 +18,18 @@
     <meta name="twitter:image" content="https://www.holdsport.dk/media/W1siZiIsIjIwMjMvMDkvMjkvMXd3cHhseTl1ZF84NTEwMzAzRl8wODMyXzQ0OENfOUQ1Rl85QzgwMDcxQzJDMzcuanBnIl0sWyJwIiwidGh1bGIiLCI2MDB4NjAwIyJdXQ==?sha=0217890684e578f8">
     <link rel="canonical" href="https://alexander-holm.com">
     
-    <!-- Pirsch Analytics - Professional visitor tracking -->
-    <script defer src="https://api.pirsch.io/pa.js"
-        id="pianjs"
-        data-code="qTEM5jBQRA6SJJfi1HE8fQkCHrKu7hPq"></script>
+    <!-- Counter API - Modern visitor tracking -->
+    <script src="https://counterapi.com/c.js?ns=alexander-holm.com" async></script>
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💻%3C/text%3E%3C/svg%3E">
     
     <title>Alexander Holm Mortensen - Software Developer Portfolio</title>
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind CSS Production Ready -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
     <script>
+      // Configure Tailwind with custom settings
       tailwind.config = {
         theme: {
           extend: {
@@ -45,6 +44,18 @@
             },
           },
         },
+      }
+      
+      // Suppress Tailwind CDN warning for production use
+      if (typeof console !== 'undefined' && console.warn) {
+        const originalWarn = console.warn;
+        console.warn = function(...args) {
+          const message = args.join(' ');
+          if (message.includes('cdn.tailwindcss.com should not be used in production')) {
+            return; // Suppress this specific warning
+          }
+          originalWarn.apply(console, args);
+        };
       }
     </script>
 
@@ -66,9 +77,29 @@
     
     <link rel="stylesheet" href="style.css">
     <style>
-      /* Smooth scrolling for the entire page */
+      /* Smooth scrolling for the entire page - optimized for performance */
       html {
           scroll-behavior: smooth;
+          scroll-padding-top: 80px;
+      }
+      
+      /* Reduce scroll-linked effects to improve performance */
+      @media (prefers-reduced-motion: no-preference) {
+        html {
+          scroll-behavior: smooth;
+        }
+      }
+      
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        
+        .hero-content h1,
+        .hero-content .social-icons,
+        .hero-content .cta-buttons {
+          animation: none;
+        }
       }
 
       /* Improved Hover effect for education items */
@@ -230,36 +261,12 @@
           animation: slideInUp 1s ease-out 0.8s both;
       }
 
-      /* Animated underline for hero title */
-      .hero-title-underline {
-          position: relative;
-          display: inline-block;
-      }
-
-      .hero-title-underline::after {
-          content: '';
-          position: absolute;
-          left: 0;
-          bottom: -4px;
-          height: 3px;
-          background: linear-gradient(45deg, #3b82f6, #8b5cf6, #06b6d4, #3b82f6);
-          background-size: 300% 300%;
-          border-radius: 2px;
-          animation: underlineExpand 1.5s ease-out 1s both, gradientShift 3s ease-in-out infinite 2.5s;
-      }
-
       /* Reduce motion for accessibility */
       @media (prefers-reduced-motion: reduce) {
           .hero-content h1,
           .hero-content .social-icons,
           .hero-content .cta-buttons {
               animation: none;
-          }
-          
-          .hero-title-underline::after {
-              animation: none;
-              width: 100%;
-              opacity: 1;
           }
       }
 
@@ -454,12 +461,13 @@
 
       .scroll-text {
           font-size: 0.75rem;
-          color: rgba(255, 255, 255, 0.6);
-          font-weight: 300;
+          color: rgba(255, 255, 255, 0.7);
+          font-weight: 400;
           letter-spacing: 0.1em;
           text-transform: uppercase;
           transition: all 0.3s ease;
           text-align: center;
+          margin-bottom: 0.5rem;
       }
 
       .scroll-indicator:hover .scroll-text {
@@ -563,39 +571,8 @@
           animation: counterPulse 0.8s ease-in-out;
       }
 
-      /* Enhanced hover effects for stats cards */
-      .stats-card {
-          background: linear-gradient(135deg, rgba(75, 85, 99, 0.2) 0%, rgba(55, 65, 81, 0.2) 100%);
-          backdrop-filter: blur(15px);
-          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-          border-radius: 1rem;
-          overflow: hidden;
-          position: relative;
-      }
-
-      .stats-card::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 2px;
-          background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.5), transparent);
-          transform: translateX(-100%);
-          transition: transform 0.6s ease;
-      }
-
-      .stats-card:hover::before {
-          transform: translateX(100%);
-      }
-
-      .stats-card:hover {
-          background: linear-gradient(135deg, rgba(75, 85, 99, 0.3) 0%, rgba(55, 65, 81, 0.3) 100%);
-          transform: translateY(-8px) scale(1.02);
-          box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05);
-      }
-
-      .stats-card:hover .counter {
+      /* Only trigger hover animation when counter is complete */
+      .stats-card:hover .counter.counter-complete {
           animation: counterPulse 0.8s ease-in-out;
       }
 
@@ -671,6 +648,147 @@
           .counter {
               font-size: 2rem !important;
           }
+          
+          .pirsch-counter-iframe {
+              width: 120px !important;
+              height: 60px !important;
+          }
+      }
+
+      /* Modern Counter API Styling - Clean Number Only */
+      .counterapi {
+          font-size: 3rem !important;
+          font-weight: 800 !important;
+          font-family: inherit !important;
+          color: #60a5fa !important;
+          background: linear-gradient(45deg, #3b82f6, #8b5cf6, #06b6d4, #10b981) !important;
+          background-size: 300% 300% !important;
+          -webkit-background-clip: text !important;
+          -webkit-text-fill-color: transparent !important;
+          background-clip: text !important;
+          animation: gradientShift 3s ease-in-out infinite !important;
+          transition: all 0.3s ease !important;
+          position: relative !important;
+          border: none !important;
+          padding: 0 !important;
+          margin: 0 !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          text-align: center !important;
+          min-height: 60px !important;
+          
+          /* Remove all default Counter API styling */
+          box-shadow: none !important;
+          border-radius: 0 !important;
+          text-decoration: none !important;
+      }
+
+      /* Remove any icons or extra elements */
+      .counterapi::before,
+      .counterapi > *:not(:last-child) {
+          display: none !important;
+      }
+
+      /* Ensure only the number shows */
+      .counterapi * {
+          background: transparent !important;
+          border: none !important;
+          box-shadow: none !important;
+          color: inherit !important;
+          font-size: inherit !important;
+          font-weight: inherit !important;
+          font-family: inherit !important;
+      }
+
+      /* Override any Counter API link styling */
+      .counterapi a,
+      .counterapi a:hover,
+      .counterapi a:visited {
+          background: transparent !important;
+          border: none !important;
+          box-shadow: none !important;
+          text-decoration: none !important;
+          color: inherit !important;
+          font-size: inherit !important;
+          font-weight: inherit !important;
+          font-family: inherit !important;
+          display: inline !important;
+          padding: 0 !important;
+          margin: 0 !important;
+      }
+
+      /* Hide any icons or badges */
+      .counterapi .icon,
+      .counterapi .badge,
+      .counterapi svg,
+      .counterapi img {
+          display: none !important;
+      }
+
+      /* Perfect hover effect for the counter */
+      .stats-card:hover .counterapi,
+      .stats-card:hover .counter-display {
+          transform: scale(1.05) !important;
+          filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.6)) !important;
+          animation: counterPulse 0.8s ease-in-out !important;
+      }
+
+      /* Loading state for counter */
+      .counterapi:empty::before {
+          content: "Loading...";
+          color: #60a5fa;
+          font-size: 1.5rem;
+          opacity: 0.7;
+      }
+
+      /* Fallback styling when Counter API doesn't load */
+      .counter-display {
+          font-size: 3rem;
+          font-weight: 800;
+          background: linear-gradient(45deg, #3b82f6, #8b5cf6, #06b6d4, #10b981);
+          background-size: 300% 300%;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          animation: gradientShift 3s ease-in-out infinite;
+          transition: all 0.3s ease;
+          position: relative;
+      }
+
+      /* Enhanced stats cards with modern glass effect */
+      .stats-card {
+          background: linear-gradient(135deg, rgba(75, 85, 99, 0.15) 0%, rgba(55, 65, 81, 0.15) 100%);
+          backdrop-filter: blur(20px);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          position: relative;
+          overflow: hidden;
+      }
+
+      .stats-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 2px;
+          background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.8), transparent);
+          transition: left 0.8s ease;
+      }
+
+      .stats-card:hover::before {
+          left: 100%;
+      }
+
+      .stats-card:hover {
+          background: linear-gradient(135deg, rgba(75, 85, 99, 0.25) 0%, rgba(55, 65, 81, 0.25) 100%);
+          transform: translateY(-8px) scale(1.02);
+          box-shadow: 
+              0 25px 50px rgba(0, 0, 0, 0.4), 
+              0 0 0 1px rgba(255, 255, 255, 0.1),
+              0 0 50px rgba(59, 130, 246, 0.1);
+          border-color: rgba(59, 130, 246, 0.3);
       }
 
       /* Enhanced skill icons styling */
@@ -856,7 +974,7 @@
             <div class="container mx-auto px-4 text-center relative z-10 hero-content">
                 <div class="max-w-3xl mx-auto reveal">
                     <h1 class="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 text-white">
-                        Hi, I'm <span class="text-blue-400 hero-title-underline">Alexander Holm Mortensen</span>
+                        Hi, I'm <span class="text-blue-400">Alexander Holm Mortensen</span>
                     </h1>
 
                     <!-- Social Icons -->
@@ -887,86 +1005,9 @@
 
             <!-- Scroll Down Indicator -->
             <div class="scroll-indicator" id="scroll-indicator">
-                <div class="scroll-text">Explore</div>
+                <div class="scroll-text">Learn More</div>
                 <div class="scroll-icon">
                     <div class="scroll-dot"></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Statistics Counter Section -->
-        <!-- Real-time stats: Visitor count via CountAPI.xyz, GitHub data via GitHub API v3 -->
-        <section id="stats" class="py-16 bg-gradient-to-r from-darker-blue/80 to-dark-blue/80 border-y border-gray-800 relative overflow-hidden">
-            <!-- Animated Background Elements -->
-            <div class="absolute inset-0">
-                <div class="absolute top-10 left-10 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
-                <div class="absolute bottom-10 right-10 w-40 h-40 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-green-500/5 rounded-full blur-3xl animate-pulse delay-500"></div>
-            </div>
-            
-            <div class="container mx-auto px-4 relative z-10">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Live Portfolio Stats</h2>
-                    <p class="text-gray-400 max-w-2xl mx-auto">Real-time data showcasing my development activity</p>
-                </div>
-                
-                <div class="max-w-5xl mx-auto">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-                        <!-- Website Visitors -->
-                        <div class="stats-card text-center p-8 rounded-xl border border-gray-700 hover:border-blue-500 group relative">
-                            <div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                            <div class="relative z-10">
-                                <div class="text-4xl md:text-5xl lg:text-6xl font-bold text-blue-400 mb-4">
-                                    <span id="visitor-count" class="counter" data-target="0">0</span>
-                                </div>
-                                <div class="text-base md:text-lg text-gray-400 uppercase tracking-wider font-medium">
-                                    <i class="fas fa-eye mr-2"></i>
-                                    Website Visitors
-                                </div>
-                                <div class="text-sm text-gray-500 mt-2">
-                                    Total portfolio views
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- GitHub Repositories -->
-                        <div class="stats-card text-center p-8 rounded-xl border border-gray-700 hover:border-green-500 group relative">
-                            <div class="absolute inset-0 bg-gradient-to-br from-green-500/5 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                            <div class="relative z-10">
-                                <div class="text-4xl md:text-5xl lg:text-6xl font-bold text-green-400 mb-4">
-                                    <span id="github-repos" class="counter" data-target="0">
-                                        <i class="fas fa-spinner fa-spin text-3xl"></i>
-                                    </span>
-                                </div>
-                                <div class="text-base md:text-lg text-gray-400 uppercase tracking-wider font-medium">
-                                    <i class="fab fa-github mr-2"></i>
-                                    Repositories
-                                </div>
-                                <div class="text-sm text-gray-500 mt-2">
-                                    Live from GitHub API
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Commits This Year -->
-                        <div class="stats-card text-center p-8 rounded-xl border border-gray-700 hover:border-purple-500 group relative">
-                            <div class="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                            <div class="relative z-10">
-                                <div class="text-4xl md:text-5xl lg:text-6xl font-bold text-purple-400 mb-4">
-                                    <span id="github-commits" class="counter" data-target="0">
-                                        <i class="fas fa-spinner fa-spin text-3xl"></i>
-                                    </span>
-                                </div>
-                                <div class="text-base md:text-lg text-gray-400 uppercase tracking-wider font-medium">
-                                    <i class="fas fa-code-branch mr-2"></i>
-                                    Commits This Year
-                                </div>
-                                <div class="text-sm text-gray-500 mt-2">
-                                    GitHub activity 2025
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </section>
