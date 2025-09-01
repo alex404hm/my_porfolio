@@ -53,6 +53,11 @@
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"></noscript>
     <link rel="stylesheet" href="style.css">
     <style>
+      /* Smooth scrolling for the entire page */
+      html {
+          scroll-behavior: smooth;
+      }
+
       /* Improved Hover effect for education items */
       #education .education-item:hover {
           transform: translateY(-6px); /* Slightly more pronounced lift */
@@ -104,6 +109,418 @@
               font-size: 2.5rem; /* Larger title for desktop */
           }
       }
+
+      /* Jump to Top Button Enhanced Animations */
+      #jump-to-top {
+          transition: 
+              opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              background-color 0.3s ease,
+              box-shadow 0.3s ease;
+          opacity: 0;
+          visibility: hidden;
+          transform: translateY(20px) scale(0.8);
+          box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+      }
+
+      #jump-to-top.visible {
+          opacity: 1;
+          visibility: visible;
+          transform: translateY(0) scale(1);
+      }
+
+      #jump-to-top:hover {
+          transform: translateY(-2px) scale(1.05);
+          box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+          background-color: #1d4ed8;
+      }
+
+      #jump-to-top:active {
+          transform: translateY(0) scale(0.95);
+      }
+
+      /* Smooth scroll enhancement for all anchor links */
+      a[href^="#"] {
+          scroll-behavior: smooth;
+      }
+
+      /* Add a subtle scroll indicator animation */
+      @keyframes scrollIndicator {
+          0% { opacity: 1; transform: translateY(0); }
+          50% { opacity: 0.5; transform: translateY(5px); }
+          100% { opacity: 1; transform: translateY(0); }
+      }
+
+      .scroll-indicator {
+          animation: scrollIndicator 2s ease-in-out infinite;
+      }
+
+      /* Hero section animations */
+      @keyframes slideInUp {
+          0% {
+              opacity: 0;
+              transform: translateY(30px);
+          }
+          100% {
+              opacity: 1;
+              transform: translateY(0);
+          }
+      }
+
+      @keyframes fadeInScale {
+          0% {
+              opacity: 0;
+              transform: scale(0.8);
+          }
+          100% {
+              opacity: 1;
+              transform: scale(1);
+          }
+      }
+
+      @keyframes underlineExpand {
+          0% {
+              width: 0;
+              opacity: 0;
+          }
+          50% {
+              opacity: 1;
+          }
+          100% {
+              width: 100%;
+              opacity: 1;
+          }
+      }
+
+      @keyframes gradientShift {
+          0% {
+              background-position: 0% 50%;
+          }
+          50% {
+              background-position: 100% 50%;
+          }
+          100% {
+              background-position: 0% 50%;
+          }
+      }
+
+      /* Hero content animations */
+      .hero-content h1 {
+          animation: slideInUp 1s ease-out 0.2s both;
+      }
+
+      .hero-content .social-icons {
+          animation: fadeInScale 1s ease-out 0.6s both;
+      }
+
+      .hero-content .cta-buttons {
+          animation: slideInUp 1s ease-out 0.8s both;
+      }
+
+      /* Animated underline for hero title */
+      .hero-title-underline {
+          position: relative;
+          display: inline-block;
+      }
+
+      .hero-title-underline::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          bottom: -4px;
+          height: 3px;
+          background: linear-gradient(45deg, #3b82f6, #8b5cf6, #06b6d4, #3b82f6);
+          background-size: 300% 300%;
+          border-radius: 2px;
+          animation: underlineExpand 1.5s ease-out 1s both, gradientShift 3s ease-in-out infinite 2.5s;
+      }
+
+      /* Reduce motion for accessibility */
+      @media (prefers-reduced-motion: reduce) {
+          .hero-content h1,
+          .hero-content .social-icons,
+          .hero-content .cta-buttons {
+              animation: none;
+          }
+          
+          .hero-title-underline::after {
+              animation: none;
+              width: 100%;
+              opacity: 1;
+          }
+      }
+
+      /* Enhanced Navbar Responsiveness */
+      /* Better tablet breakpoints */
+      @media (min-width: 640px) and (max-width: 1023px) {
+          nav .container {
+              padding-left: 1.5rem;
+              padding-right: 1.5rem;
+          }
+          
+          .desktop-nav {
+              display: none; /* Hide desktop nav on tablets */
+          }
+          
+          #mobile-menu-toggle {
+              display: block; /* Show mobile toggle on tablets */
+          }
+      }
+
+      /* Improved tablet menu */
+      @media (min-width: 768px) and (max-width: 1023px) {
+          #mobile-menu ul {
+              display: grid;
+              grid-template-columns: repeat(2, 1fr);
+              gap: 2rem;
+              max-width: 600px;
+              padding: 0 2rem;
+          }
+          
+          #mobile-menu .mobile-nav-link {
+              font-size: 1.5rem;
+              text-align: center;
+              padding: 1rem;
+              border-radius: 0.5rem;
+              border: 1px solid rgba(59, 130, 246, 0.3);
+              transition: all 0.3s ease;
+          }
+          
+          #mobile-menu .mobile-nav-link:hover {
+              background-color: rgba(59, 130, 246, 0.1);
+              border-color: rgba(59, 130, 246, 0.6);
+              transform: translateY(-2px);
+          }
+      }
+
+      /* Desktop improvements */
+      @media (min-width: 1024px) {
+          .desktop-nav {
+              display: flex !important;
+          }
+          
+          #mobile-menu-toggle {
+              display: none !important;
+          }
+          
+          .nav-link {
+              position: relative;
+              transition: all 0.3s ease;
+          }
+          
+          .nav-link::after {
+              content: '';
+              position: absolute;
+              bottom: -4px;
+              left: 0;
+              width: 0;
+              height: 2px;
+              background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+              transition: width 0.3s ease;
+          }
+          
+          .nav-link:hover::after {
+              width: 100%;
+          }
+      }
+
+      /* Scroll Down Indicator - Modern Design */
+      .scroll-indicator {
+          position: absolute;
+          bottom: 2rem;
+          left: 50%;
+          transform: translateX(-50%);
+          z-index: 20;
+          cursor: pointer;
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 0.5rem;
+      }
+
+      .scroll-indicator:hover {
+          transform: translateX(-50%) translateY(-8px);
+      }
+
+      /* Modern scroll icon with multiple dots */
+      .scroll-icon {
+          position: relative;
+          width: 2rem;
+          height: 3rem;
+          border: 2px solid rgba(255, 255, 255, 0.6);
+          border-radius: 1rem;
+          display: flex;
+          justify-content: center;
+          align-items: flex-start;
+          padding-top: 0.5rem;
+          background: rgba(255, 255, 255, 0.05);
+          backdrop-filter: blur(10px);
+          transition: all 0.3s ease;
+      }
+
+      .scroll-indicator:hover .scroll-icon {
+          border-color: rgba(59, 130, 246, 0.8);
+          background: rgba(59, 130, 246, 0.1);
+          box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+      }
+
+      /* Animated dot inside the scroll icon */
+      .scroll-dot {
+          width: 4px;
+          height: 4px;
+          background: rgba(255, 255, 255, 0.8);
+          border-radius: 50%;
+          animation: scrollDot 2s ease-in-out infinite;
+      }
+
+      .scroll-indicator:hover .scroll-dot {
+          background: rgba(59, 130, 246, 1);
+      }
+
+      @keyframes scrollDot {
+          0% {
+              transform: translateY(0);
+              opacity: 0;
+          }
+          50% {
+              opacity: 1;
+          }
+          100% {
+              transform: translateY(1rem);
+              opacity: 0;
+          }
+      }
+
+      /* Alternative chevron design */
+      .scroll-chevron {
+          display: none; /* Hidden by default, can be toggled */
+          width: 2rem;
+          height: 2rem;
+          position: relative;
+      }
+
+      .chevron-line {
+          position: absolute;
+          width: 0.8rem;
+          height: 2px;
+          background: rgba(255, 255, 255, 0.7);
+          border-radius: 1px;
+          transition: all 0.3s ease;
+      }
+
+      .chevron-line:first-child {
+          transform: rotate(45deg);
+          left: 0.3rem;
+          top: 0.8rem;
+      }
+
+      .chevron-line:last-child {
+          transform: rotate(-45deg);
+          right: 0.3rem;
+          top: 0.8rem;
+      }
+
+      .scroll-indicator:hover .chevron-line {
+          background: rgba(59, 130, 246, 1);
+          box-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
+      }
+
+      @keyframes chevronBounce {
+          0%, 100% {
+              transform: translateY(0);
+          }
+          50% {
+              transform: translateY(0.3rem);
+          }
+      }
+
+      .scroll-chevron {
+          animation: chevronBounce 2s ease-in-out infinite;
+      }
+
+      .scroll-text {
+          font-size: 0.75rem;
+          color: rgba(255, 255, 255, 0.6);
+          font-weight: 300;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          transition: all 0.3s ease;
+          text-align: center;
+      }
+
+      .scroll-indicator:hover .scroll-text {
+          color: rgba(59, 130, 246, 0.9);
+          transform: translateY(-2px);
+      }
+
+      /* Pulse effect for extra attention */
+      .scroll-indicator::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 4rem;
+          height: 4rem;
+          border: 1px solid rgba(59, 130, 246, 0.3);
+          border-radius: 50%;
+          animation: pulse 3s ease-in-out infinite;
+          pointer-events: none;
+      }
+
+      @keyframes pulse {
+          0% {
+              transform: translate(-50%, -50%) scale(0.8);
+              opacity: 0.8;
+          }
+          50% {
+              transform: translate(-50%, -50%) scale(1.2);
+              opacity: 0.3;
+          }
+          100% {
+              transform: translate(-50%, -50%) scale(1.4);
+              opacity: 0;
+          }
+      }
+
+      /* Hide scroll indicator when scrolled */
+      .scroll-indicator.hidden {
+          opacity: 0;
+          pointer-events: none;
+          transform: translateX(-50%) translateY(1rem);
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+          .scroll-indicator {
+              bottom: 1.5rem;
+          }
+          
+          .scroll-text {
+              font-size: 0.7rem;
+          }
+          
+          .scroll-icon {
+              width: 1.8rem;
+              height: 2.7rem;
+          }
+      }
+
+      /* Mobile menu improvements */
+      @media (max-width: 767px) {
+          #mobile-menu .mobile-nav-link {
+              font-size: 2rem;
+              padding: 1rem 2rem;
+              border-radius: 0.5rem;
+              transition: all 0.3s ease;
+          }
+          
+          #mobile-menu .mobile-nav-link:hover {
+              background-color: rgba(59, 130, 246, 0.1);
+              transform: scale(1.05);
+          }
+      }
     </style>
     <script type="application/ld+json">
     {
@@ -131,21 +548,22 @@
         <!-- Frosted Glass Effect -->
         <div class="absolute inset-0 bg-dark-blue/70 backdrop-blur-md"></div>
 
-        <nav class="container mx-auto px-6 py-4 relative">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 relative">
             <div class="flex items-center justify-between">
                 <!-- Logo/Name with subtle animation -->
                 <a href="#home" class="group" aria-label="Home">
-                    <div class="text-xl font-bold text-white relative">
+                    <div class="text-lg sm:text-xl font-bold text-white relative">
                         <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-600">
                             Alexander
                         </span>
-                        <span class="text-white ml-1">H. Mortensen</span>
+                        <span class="text-white ml-1 hidden sm:inline">H. Mortensen</span>
+                        <span class="text-white ml-1 sm:hidden">H.M.</span>
                         <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 group-hover:w-full transition-all duration-300"></span>
                     </div>
                 </a>
 
                 <!-- Desktop Navigation -->
-                <ul class="hidden md:flex items-center space-x-8">
+                <ul class="desktop-nav hidden lg:flex items-center space-x-6 xl:space-x-8">
                     <li>
                         <a href="#home" class="nav-link text-custom-gray hover:text-blue-400 text-sm uppercase tracking-wider font-medium">
                             <i class="fas fa-home mr-1"></i> Home
@@ -173,8 +591,8 @@
                     </li>
                 </ul>
 
-                <!-- Modern Mobile Menu Toggle -->
-                <button id="mobile-menu-toggle" class="md:hidden text-white p-2 focus:outline-none z-20" aria-label="Toggle menu">
+                <!-- Mobile/Tablet Menu Toggle -->
+                <button id="mobile-menu-toggle" class="lg:hidden text-white p-2 focus:outline-none z-20 hover:bg-white/10 rounded-md transition-colors" aria-label="Toggle menu">
                     <div class="w-6 h-5 relative flex flex-col justify-between">
                         <span class="w-full h-0.5 bg-white rounded-full transform transition-all duration-300" id="line1"></span>
                         <span class="w-full h-0.5 bg-white rounded-full transform transition-all duration-300" id="line2"></span>
@@ -222,11 +640,11 @@
             <div class="container mx-auto px-4 text-center relative z-10 hero-content">
                 <div class="max-w-3xl mx-auto reveal">
                     <h1 class="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 text-white">
-                        Hi, I'm <span class="text-blue-400">Alexander Holm Mortensen</span>
+                        Hi, I'm <span class="text-blue-400 hero-title-underline">Alexander Holm Mortensen</span>
                     </h1>
 
                     <!-- Social Icons -->
-                    <div class="flex justify-center items-center mb-6 md:mb-8 space-x-6">
+                    <div class="flex justify-center items-center mb-6 md:mb-8 space-x-6 social-icons">
                         <a href="https://github.com/alex404hm" target="_blank" rel="noopener noreferrer" class="text-custom-gray hover:text-white transition-colors transform hover:scale-110" aria-label="GitHub Profile">
                             <i class="fab fa-github text-2xl md:text-3xl"></i>
                         </a>
@@ -237,7 +655,7 @@
                             <i class="fas fa-phone text-2xl md:text-3xl"></i>
                         </a>
                     </div>
-                    <div class="flex flex-col md:flex-row justify-center space-y-3 md:space-y-0 md:space-x-4">
+                    <div class="flex flex-col md:flex-row justify-center space-y-3 md:space-y-0 md:space-x-4 cta-buttons">
                         <a href="#projects" class="btn-gradient w-full md:w-auto px-7 py-3 rounded-xl flex items-center justify-center space-x-2 shadow-lg shadow-blue-600/20 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-300 group">
                             <i class="fas fa-code"></i>
                             <span>View My Work</span>
@@ -248,6 +666,14 @@
                             <span>Contact Me</span>
                         </a>
                     </div>
+                </div>
+            </div>
+
+            <!-- Scroll Down Indicator -->
+            <div class="scroll-indicator" id="scroll-indicator">
+                <div class="scroll-text">Explore</div>
+                <div class="scroll-icon">
+                    <div class="scroll-dot"></div>
                 </div>
             </div>
         </section>
@@ -305,12 +731,13 @@
                            <!-- CTA Buttons -->
                            <div class="mt-8 flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
                                <a
-                                   href="/resume.pdf"
-                                   download
+                                   href="./resume.pdf"
+                                   target="_blank"
+                                   rel="noopener noreferrer"
                                    class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center space-x-2 shadow-lg shadow-blue-600/20"
                                >
-                                   <i class="fas fa-download"></i>
-                                   <span>Download Resume</span>
+                                   <i class="fas fa-external-link-alt"></i>
+                                   <span>View Resume</span>
                                </a>
                                <a
                                    href="#contact"

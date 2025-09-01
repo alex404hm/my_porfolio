@@ -8,6 +8,7 @@ function init() {
   initProjectsLazyLoad();
   initJumpToTopButton();
   initContactForm();
+  initScrollIndicator();
 }
 
 function initMobileMenuToggle() {
@@ -65,14 +66,14 @@ function smoothScrollTo(targetY, durationMs) {
   const distanceY = targetY - startY;
   const startTime = performance.now();
 
-  function easeInOutCubic(t) {
-    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  function easeInOutQuart(t) {
+    return t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
   }
 
   function step(currentTime) {
     const elapsed = currentTime - startTime;
     const progress = Math.min(elapsed / durationMs, 1);
-    const eased = easeInOutCubic(progress);
+    const eased = easeInOutQuart(progress);
     window.scrollTo(0, Math.round(startY + distanceY * eased));
     if (progress < 1) requestAnimationFrame(step);
   }
@@ -102,7 +103,7 @@ function initSmoothScrolling() {
       if (prefersReducedMotion) {
         window.scrollTo(0, targetY);
       } else {
-        smoothScrollTo(targetY, 700);
+        smoothScrollTo(targetY, 900); // Increased duration for smoother scrolling
       }
 
       if (history.pushState) {
@@ -221,24 +222,67 @@ function initJumpToTopButton() {
   const jumpToTopButton = document.getElementById("jump-to-top");
   if (!jumpToTopButton) return;
 
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > 300) {
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  // Show/hide button based on scroll position with smooth transitions
+  function toggleButtonVisibility() {
+    const scrolled = window.scrollY > 300;
+    if (scrolled) {
       jumpToTopButton.classList.add("visible");
-      jumpToTopButton.style.opacity = "1";
-      jumpToTopButton.style.transform = "translateY(0)";
     } else {
       jumpToTopButton.classList.remove("visible");
-      jumpToTopButton.style.opacity = "0";
-      jumpToTopButton.style.transform = "translateY(10px)";
+    }
+  }
+
+  // Throttle scroll events for better performance
+  let isScrolling = false;
+  window.addEventListener("scroll", () => {
+    if (!isScrolling) {
+      requestAnimationFrame(() => {
+        toggleButtonVisibility();
+        isScrolling = false;
+      });
+      isScrolling = true;
     }
   });
 
-  jumpToTopButton.addEventListener("click", () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+  // Enhanced smooth scroll to top
+  jumpToTopButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    
+    if (prefersReducedMotion) {
+      window.scrollTo(0, 0);
+      return;
+    }
+
+    // Custom smooth scroll animation
+    const startY = window.pageYOffset;
+    const duration = Math.min(800 + startY * 0.3, 1500); // Dynamic duration based on scroll distance
+    const startTime = performance.now();
+
+    function easeOutCubic(t) {
+      return 1 - Math.pow(1 - t, 3);
+    }
+
+    function animateScroll(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = easeOutCubic(progress);
+      
+      window.scrollTo(0, Math.round(startY * (1 - eased)));
+      
+      if (progress < 1) {
+        requestAnimationFrame(animateScroll);
+      }
+    }
+
+    requestAnimationFrame(animateScroll);
   });
+
+  // Initial check
+  toggleButtonVisibility();
 }
 
 function initProjectsLazyLoad() {
@@ -286,4 +330,55 @@ function initContactForm() {
       submitBtn.style.opacity = "1";
     }, 4000);
   });
+}
+
+function initScrollIndicator() {
+  const scrollIndicator = document.getElementById("scroll-indicator");
+  if (!scrollIndicator) return;
+
+  // Hide scroll indicator when user scrolls past hero section
+  function handleScroll() {
+    const scrolled = window.scrollY > 100;
+    if (scrolled) {
+      scrollIndicator.classList.add("hidden");
+    } else {
+      scrollIndicator.classList.remove("hidden");
+    }
+  }
+
+  // Smooth scroll to about section when clicked
+  scrollIndicator.addEventListener("click", (e) => {
+    e.preventDefault();
+    const aboutSection = document.getElementById("about");
+    if (aboutSection) {
+      const headerOffset = getHeaderOffset();
+      const elementPosition = aboutSection.getBoundingClientRect().top + window.pageYOffset;
+      const targetY = Math.max(elementPosition - headerOffset, 0);
+
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+
+      if (prefersReducedMotion) {
+        window.scrollTo(0, targetY);
+      } else {
+        smoothScrollTo(targetY, 900);
+      }
+    }
+  });
+
+  // Listen for scroll events
+  let isScrolling = false;
+  window.addEventListener("scroll", () => {
+    if (!isScrolling) {
+      requestAnimationFrame(() => {
+        handleScroll();
+        isScrolling = false;
+      });
+      isScrolling = true;
+    }
+  });
+
+  // Initial check
+  handleScroll();
 }
